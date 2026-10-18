@@ -53,6 +53,7 @@
         tips: ["Reken op een emotionele dag en neem er de tijd voor.", "Controleer waar je rondleiding begint. Die start in Auschwitz I, niet op de parking van Auschwitz-Birkenau: wij stonden op de verkeerde site en moesten een shuttlebusje betalen, waarna onze groep al vertrokken was. We hebben ze ingehaald, maar dat was een speurtocht.", "Je krijgt een ontvanger en een koptelefoon om de gids te verstaan. Houd je groep dus in het oog: je merkt aan de stem dat je dichterbij komt.", "Een gids was voor ons een goede beslissing. Anders hadden we veel info gemist."]
       }
     ],
+    podcast: {"url": "https://open.spotify.com/episode/6buLZgNxWx9mjMVBH2ha72", "embed": "https://open.spotify.com/embed/episode/6buLZgNxWx9mjMVBH2ha72", "show": "De Grote Podcastlas", "title": "#138 Polen", "duur": "110 min"},
     practical: [
       {"label": "Inreis", "group": "Voor je vertrekt", "t": "Schengenzone. Je hebt enkel een identiteitskaart nodig, die nog minstens 6 maanden geldig is.", "ok": true},
       {"label": "Beste reistijd", "group": "Voor je vertrekt", "t": "Van mei tot en met september is het aangenaam. De winters zijn koud, met sneeuw."},

@@ -53,6 +53,7 @@
         stravaEmbed: '<div class="strava-embed-placeholder" data-embed-type="route" data-embed-id="3532305070004086620" data-full-width="true" data-style="standard" data-surface-type="true" data-map-hash="11.78/48.94913/20.38844" data-from-embed="true" data-token="l9_6ajea5tkYvr2s-Pz4B6DXeBHmPVtAjVb04NPNG3o"></div>'
       }
     ],
+    podcast: {"url": "https://open.spotify.com/episode/4Im9kGnshQ1xeWZzD2H54L", "embed": "https://open.spotify.com/embed/episode/4Im9kGnshQ1xeWZzD2H54L", "show": "De Grote Podcastlas", "title": "#78 Slowakije", "duur": "69 min"},
     practical: [
       {"label": "Inreis", "group": "Voor je vertrekt", "t": "Schengenzone. Je hebt enkel een identiteitskaart nodig, die nog minstens 6 maanden geldig is.", "ok": true},
       {"label": "Beste reistijd", "group": "Voor je vertrekt", "t": "Mei tot en met september is het beste om te wandelen. In de winter liggen veel hoge routes onder de sneeuw en zijn sommige wandelroutes in de nationale parken dicht."},
