@@ -549,10 +549,12 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
 .snorren { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; }
 .snorren img { width: 40px; height: auto; display: block; }
 .snorren img.leeg { filter: grayscale(1); opacity: .25; }
+.snorren .half { position: relative; display: block; width: 40px; }
+.snorren .half img.vol { position: absolute; top: 0; left: 0; clip-path: inset(0 50% 0 0); }
 .snorren span { margin-left: 6px; font-weight: 700; color: #8a3306; font-size: 15px; }
 .hike-gal figure.nat .photo { aspect-ratio: auto; }
 .hike-gal figure.nat .photo img { height: auto; }
 .snorren span { white-space: nowrap; }
-@media (max-width: 560px) { .snorren { gap: 5px; } .snorren img { width: 30px; } .snorren span { margin-left: 2px; font-size: 14px; } }
+@media (max-width: 560px) { .snorren { gap: 5px; } .snorren img { width: 30px; } .snorren .half { width: 30px; } .snorren span { margin-left: 2px; font-size: 14px; } }
 .mening-box p { text-align: justify; hyphens: none; -webkit-hyphens: none; }
 .gold-box p, .warn-box p, .story-box p, .mening-box p, .s-lead, .concept-note, .info p { text-align: justify; hyphens: none; -webkit-hyphens: none; }

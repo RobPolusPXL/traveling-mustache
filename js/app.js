@@ -25,6 +25,17 @@
     return window.PHOTO_BASE + src;
   }
 
+  // Score met snorren; een score met .5 krijgt een halve snor.
+  function scoreTxt(s) { return String(s).replace(".", ","); }
+  function snorrenHtml(score) {
+    var img = function (cls) { return '<img src="images/logo/snor.webp" alt="" width="40" height="13"' + (cls ? ' class="' + cls + '"' : "") + ">"; };
+    return [1, 2, 3, 4, 5].map(function (i) {
+      if (i <= score) return img("");
+      if (i - 0.5 === score) return '<i class="half">' + img("leeg") + img("vol") + "</i>";
+      return img("leeg");
+    }).join("") + "<span>" + scoreTxt(score) + " van 5</span>";
+  }
+
   // Een of meer waarschuwingsblokken; meerdere komen naast elkaar te staan.
   function warnBlocks(w) {
     var list = [].concat(w);
@@ -413,7 +424,7 @@ function section(title, inner, sub, cls) {
       (kids.length ? '<div class="places city-places" data-n="' + (kids.length > 3 ? "many" : kids.length) + '">' + kids.map(function (k) { return '<a class="place" href="' + cpath(c) + k.slug + '/">' + photo(k.photos[0]) + "<h3>" + esc(k.t) + "</h3>" + (k.text ? "<p>" + esc(excerpt(k.text, 90)) + "</p>" : "") + "</a>"; }).join("") + "</div>" : "") +
       (a.warn ? warnBlocks(a.warn) : "") +
       (a.goldTip ? '<div class="gold-box" role="note"><b>' + esc(a.goldTip.label || "Gouden tip") + "</b>" + a.goldTip.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>" : "") +
-      (a.mening ? '<div class="mening-box" id="mening" role="note"><b>Onze mening</b><div class="snorren" role="img" aria-label="' + a.mening.score + ' van 5 snorren">' + [1, 2, 3, 4, 5].map(function (i) { return '<img src="images/logo/snor.webp" alt="" width="40" height="13"' + (i > a.mening.score ? ' class="leeg"' : "") + ">"; }).join("") + "<span>" + a.mening.score + " van 5</span></div>" + a.mening.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>" : "") +
+      (a.mening ? '<div class="mening-box" id="mening" role="note"><b>Onze mening</b><div class="snorren" role="img" aria-label="' + scoreTxt(a.mening.score) + ' van 5 snorren">' + snorrenHtml(a.mening.score) + "</div>" + a.mening.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>" : "") +
       (a.gallery ? gallery(a.gallery, a.stravaEmbed, a.frameHtml) : a.city ? "" : '<div class="s-photos' + (n === 2 ? " two" : "") + '">' + a.photos.map(figure).join("") + "</div>") +
       (a.story ? [].concat(a.story).map(function (st) { return '<div class="story-box" role="note"><b>' + esc(st.label || "Leuke anekdote") + "</b>" + st.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + (st.closing ? '<p class="closing">' + esc(st.closing) + "</p>" : "") + "</div>"; }).join("") : "") +
       (a.practical && a.practical.length ? '<div class="s-practical"><h2>Praktisch</h2><div class="facts">' + a.practical.map(function (f) { return '<div class="fact"><b>' + esc(f.label) + "</b><span>" + esc(f.t) + "</span></div>"; }).join("") + "</div></div>" : "") +
