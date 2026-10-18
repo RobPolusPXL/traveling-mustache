@@ -598,12 +598,11 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
   .facts-strip small { grid-column: 2; margin-top: 1px; white-space: normal; }
 }
 
-/* podcastkaart op gsm: compacter, rechts tegen de onderkant van de foto */
+/* podcastkaart op gsm: evenbreed onder het feitenblok (de kaart in de foto verdwijnt) */
+.podcast-mob { display: none; }
 @media (max-width: 700px) {
-  .podcast-hero { justify-content: flex-end; bottom: 56px; }
-  .podcast-kaart { gap: 9px; padding: 7px 12px 7px 9px; border-radius: 9px; }
-  .podcast-kaart svg { width: 24px; height: 24px; }
-  .podcast-kaart b { font-size: 13px; }
-  .podcast-kaart small { display: none; }
-  .hero.has-podcast .hero-text { padding-bottom: 110px; }
+  .podcast-hero { display: none; }
+  .hero.has-podcast .hero-text { padding-bottom: 64px; }
+  .podcast-mob { display: block; margin-top: 14px; }
+  .podcast-mob .podcast-kaart { display: flex; max-width: none; width: 100%; box-sizing: border-box; padding: 11px 14px; border-radius: 14px; }
 }
