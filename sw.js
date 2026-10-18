@@ -1,6 +1,6 @@
 // Eenvoudige service worker: eigen pagina's, CSS en JS komen online binnen en worden bewaard voor als er geen verbinding is.
 // Foto's (andere host) worden niet bewaard.
-var CACHE = "tm-v2";
+var CACHE = "tm-v3";
 self.addEventListener("install", function () { self.skipWaiting(); });
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (ks) {
