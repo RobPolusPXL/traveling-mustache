@@ -546,6 +546,7 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
 .mening-box { margin: 28px 0 0; padding: 18px 22px; background: #fbe6d4; border-left: 4px solid #b4440a; border-radius: 0 12px 12px 0; color: #3a1604; }
 .mening-box b { display: block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #8a3306; margin-bottom: 8px; }
 .mening-box p { margin: 0; line-height: 1.55; }
+.mening-box p + p { margin-top: 12px; }
 .snorren { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; }
 .snorren img { width: 40px; height: auto; display: block; }
 .snorren img.leeg { filter: grayscale(1); opacity: .25; }
