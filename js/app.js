@@ -703,7 +703,10 @@ function section(title, inner, sub, cls) {
   (function () {
     var done = countries.filter(function (c) { return c.done; }).sort(function (a, b) { return a.name.localeCompare(b.name, "nl"); });
     menuDropdown("./#bestemmingen", byContinent(done).map(function (g) {
-      return { name: g.name, items: g.items.map(function (c) { return { href: cpath(c), label: c.name }; }) };
+      var items = g.items.map(function (c) { return { href: cpath(c), label: c.name }; });
+      var us = g.items.filter(function (c) { return c.slug === "verenigde-staten"; })[0];
+      if (us) { items.push({ href: cpath(us) + "miami/", label: "Miami" }); items.sort(function (a, b) { return a.label.localeCompare(b.label, "nl"); }); }
+      return { name: g.name, items: items };
     }));
     var perJaar = {};
     trips.forEach(function (t) {
