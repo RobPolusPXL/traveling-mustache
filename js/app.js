@@ -334,17 +334,12 @@ function section(title, inner, sub, cls) {
     return '<div class="stamp" aria-hidden="true"><div>Bezocht<b>' + esc(c.visited.replace(/^.*?(\d+ [a-z]+ \d{4})$/i, "$1").replace(/^\d+ /, "")) + "</b>" + c.nights + " nachten</div></div>";
   }
 
-  // Podcast: twee varianten naast elkaar als voorbeeld (link met logo en ingebakken speler)
-  var SPOTIFY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1DB954"/><g fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.9"><path d="M5.8 9c4.1-1.1 8.8-.7 12.6 1.5"/><path d="M6.6 12.2c3.4-.9 7.2-.6 10.3 1.2"/><path d="M7.3 15.1c2.9-.7 5.9-.4 8.4 1"/></g></svg>';
-  function podcastHtml(p) {
-    return '<section class="block podcast">' + "<h2>Podcast</h2>" +
-      '<p class="podcast-note">Voorbeeld met twee varianten: kies er één.</p>' +
-      '<h3 class="podcast-var">Variant 1: link met logo</h3>' +
-      '<a class="podcast-link" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + SPOTIFY +
-      "<span><b>Luister op Spotify</b><small>" + esc(p.show) + " · " + esc(p.title) + (p.duur ? " · " + esc(p.duur) : "") + "</small></span></a>" +
-      '<h3 class="podcast-var">Variant 2: ingebakken speler</h3>' +
-      '<iframe class="podcast-embed" style="border-radius:12px" src="' + esc(p.embed) + '" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="' + esc(p.show + ": " + p.title) + '"></iframe>' +
-      "</section>";
+  // Subtiele podcastkaart rechtsonder in de openingsfoto van een land
+  function podcastKaart(p) {
+    if (!p) return "";
+    return '<div class="wrap podcast-hero"><a class="podcast-kaart" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fff"/><g fill="none" stroke="#b4440a" stroke-linecap="round" stroke-width="1.9"><path d="M5.8 9c4.1-1.1 8.8-.7 12.6 1.5"/><path d="M6.6 12.2c3.4-.9 7.2-.6 10.3 1.2"/><path d="M7.3 15.1c2.9-.7 5.9-.4 8.4 1"/></g></svg>' +
+      "<span><b>Luister naar de podcast</b><small>" + esc(p.show) + " · " + esc(p.title) + "</small></span></a></div>";
   }
 
   function renderCountry(c) {
@@ -357,7 +352,7 @@ function section(title, inner, sub, cls) {
 
     var pl = places(c);
     var rest = (c.activities || []).filter(function (a) { return !(a.photos && a.photos.length); });
-    var html = '<section class="hero short">' + hero(c.cover.src, c.cover.alt, "Bestemming", c.name, c.tagline) + "</section>" + factsStrip(c) +
+    var html = '<section class="hero short' + (c.podcast ? " has-podcast" : "") + '">' + hero(c.cover.src, c.cover.alt, "Bestemming", c.name, c.tagline) + podcastKaart(c.podcast) + "</section>" + factsStrip(c) +
       '<div class="wrap">' +
       '<div class="c-body"><div><p class="intro">' + esc(c.intro) + "</p>" +
       "</div>" +
@@ -396,7 +391,6 @@ function section(title, inner, sub, cls) {
     if (c.weetjes && c.weetjes.length) html += section("Wist je dat?", '<div class="facts">' + c.weetjes.map(function (f) {
       return '<div class="fact"><b>' + esc(f.label) + "</b><span>" + esc(f.t) + "</span></div>";
     }).join("") + "</div>");
-    if (c.podcast) html += podcastHtml(c.podcast);
     if (c.tips && c.tips.length) html += '<section class="block">' + '<ul class="tips' + (c.tips.length > 1 ? " multi" : "") + '">' + c.tips.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></section>";
     if (c.practical && c.practical.length) {
       if (c.practical.some(function (f) { return f.group; })) {

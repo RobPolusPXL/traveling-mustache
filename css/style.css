@@ -577,12 +577,12 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
   .nav-dd.open > a { color: var(--accent) !important; }
 }
 
-/* ---------- podcast ---------- */
-.podcast-note { margin: 4px 0 18px; color: var(--muted, #6b7a76); }
-.podcast-var { margin: 22px 0 10px; font: 700 13px/1.2 var(--sans, inherit); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
-.podcast-link { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px; background: #fff; text-decoration: none; color: var(--ink); transition: box-shadow .2s ease, transform .2s ease; max-width: 560px; }
-.podcast-link:hover { box-shadow: 0 8px 26px rgba(0,0,0,.12); transform: translateY(-1px); }
-.podcast-link svg { width: 48px; height: 48px; flex: none; }
-.podcast-link b { display: block; font-size: 18px; }
-.podcast-link small { display: block; margin-top: 2px; font-size: 14px; color: var(--muted, #6b7a76); }
-.podcast-embed { display: block; border: 0; max-width: 100%; }
+/* ---------- podcast: kleine kaart rechtsonder in de openingsfoto ---------- */
+.podcast-hero { position: absolute; left: 0; right: 0; bottom: 80px; z-index: 3; display: flex; justify-content: flex-end; pointer-events: none; }
+.podcast-kaart { pointer-events: auto; display: inline-flex; align-items: center; gap: 11px; max-width: 300px; padding: 9px 15px 9px 11px; border-radius: 10px; background: #b4440a; color: #fff !important; text-decoration: none; text-shadow: none !important; box-shadow: 0 8px 24px rgba(0,0,0,.28); transition: transform .2s ease, background .2s ease; }
+.podcast-kaart:hover { background: #9b3a08; transform: translateY(-1px); }
+.podcast-kaart svg { width: 30px; height: 30px; flex: none; }
+.podcast-kaart b { display: block; font-size: 14px; line-height: 1.25; }
+.podcast-kaart small { display: block; margin-top: 1px; font-size: 12px; line-height: 1.3; opacity: .9; }
+.hero.has-podcast .hero-text { padding-bottom: 92px; }
+@media (max-width: 700px) { .podcast-hero { justify-content: flex-start; bottom: 80px; } .hero.has-podcast .hero-text { padding-bottom: 150px; } }
