@@ -397,6 +397,9 @@ footer .insta:hover span { text-decoration: underline; }
 .warn-box p { margin: 0; line-height: 1.55; }
 .warn-box p:first-of-type { font-weight: 700; font-size: 18px; }
 .warn-box p + p { margin-top: 6px; }
+.warn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0 0; align-items: stretch; }
+.warn-row .warn-box { margin: 0; }
+@media (max-width: 760px) { .warn-row { grid-template-columns: 1fr; } }
 .story-box { margin: 28px 0 0; padding: 18px 22px; background: #e9edf1; border-left: 4px solid #2e3237; border-radius: 0 12px 12px 0; color: #1c2833; }
 .story-box b { display: block; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #475d73; margin-bottom: 4px; }
 .story-box p { margin: 0; line-height: 1.55; }
