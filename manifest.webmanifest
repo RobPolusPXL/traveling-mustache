@@ -3,6 +3,7 @@
   "short_name": "Mustache",
   "description": "Reisinspiratie per land, van plaatsen die Rob en Joke zelf beleefden.",
   "lang": "nl",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
