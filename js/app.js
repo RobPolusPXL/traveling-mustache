@@ -19,10 +19,16 @@
     });
   }
 
+  // Grote foto's staan in de aparte fotorepo; logo, vlaggen en home blijven lokaal.
+  function foto(src) {
+    if (!src || !window.PHOTO_BASE || !/^images\//.test(src) || /^images\/(logo|flags|home)\//.test(src)) return src;
+    return window.PHOTO_BASE + src;
+  }
+
   function photo(p, cls) {
     p = p || {};
     if (p.src) {
-      return '<div class="photo ' + (cls || "") + '"><img src="' + esc(p.src) + '" alt="' + esc(p.alt || "") + '" loading="lazy"></div>';
+      return '<div class="photo ' + (cls || "") + '"><img src="' + esc(foto(p.src)) + '" alt="' + esc(p.alt || "") + '" loading="lazy"></div>';
     }
     return '<div class="photo empty ' + (cls || "") + '" role="img" aria-label="' + esc(p.alt || "Foto volgt") + '"></div>';
   }
@@ -54,7 +60,7 @@
   /* ---------- home ---------- */
 
   function hero(src, alt, label, title, text, extra) {
-    return '<img src="' + esc(src) + '" alt="' + esc(alt) + '" fetchpriority="high">' +
+    return '<img src="' + esc(foto(src)) + '" alt="' + esc(alt) + '" fetchpriority="high">' +
       '<div class="wrap hero-text"><div>' + (label ? '<span class="label">' + esc(label) + "</span>" : "") +
       "<h1>" + esc(title) + "</h1>" + (text ? "<p>" + esc(text) + "</p>" : "") + "</div>" + (extra || "") + "</div>";
   }
@@ -424,7 +430,7 @@ function section(title, inner, sub, cls) {
     return '<div class="d-photos hike-gal">' + g.map(function (x) {
       var cls = (x.span ? " sp" + x.span : "") + (x.tall ? " tall" : "") + (x.center ? " ctr" : "") + (x.fill ? " fill" : "") + (x.nat ? " nat" : "");
       if (x.section) { var im = x.section.h.match(/^Ter info: (.*)$/); return '<div class="gal-text' + (im ? " info" : "") + '">' + (im ? '<span class="info-label">Ter info</span>' : "") + "<h2>" + esc(im ? im[1].charAt(0).toUpperCase() + im[1].slice(1) : x.section.h) + (x.section.links ? ' <span class="gal-links">' + x.section.links.map(function (l) { return '<a class="gal-link ' + esc(l.type) + '" href="' + esc(l.href) + '" rel="noopener" target="_blank" aria-label="' + esc(l.label) + '" title="' + esc(l.label) + '">' + (LINKICONS[l.type] || "") + "</a>"; }).join("") + "</span>" : "") + "</h2>" + x.section.p.map(function (p) { return "<p>" + rich(p) + "</p>"; }).join("") + "</div>"; }
-      if (x.video) return '<figure class="video-cell' + cls + '"><video controls playsinline preload="metadata" poster="' + esc(x.poster) + '" aria-label="' + esc(x.alt) + '"><source src="' + esc(x.video) + '" type="video/mp4"></video></figure>';
+      if (x.video) return '<figure class="video-cell' + cls + '"><video controls playsinline preload="metadata" poster="' + esc(foto(x.poster)) + '" aria-label="' + esc(x.alt) + '"><source src="' + esc(foto(x.video)) + '" type="video/mp4"></video></figure>';
       if (x.frame) return '<figure class="frame-cell sp6">' + (frameHtml || "") + "</figure>";
       if (x.embed) return '<figure class="strava-cell' + cls + '">' + (embedHtml || "") + "</figure>";
       return '<figure class="' + cls.trim() + '">' + photo(x) + (x.caption ? "<figcaption>" + (x.href ? '<a href="' + esc(x.href) + '" rel="noopener" target="_blank">' + esc(x.caption) + "</a>" : esc(x.caption)) + "</figcaption>" : "") + "</figure>";
