@@ -150,6 +150,7 @@
       { t: "Jajce", text: "Een laatste stop op de terugweg, met de waterval midden in de stad.", ok: true },
       { t: "Blagaj", ok: false }
     ],
+    podcast: {"url": "https://open.spotify.com/episode/3UFXwNlDEdtF8sRYS1drmU", "embed": "https://open.spotify.com/embed/episode/3UFXwNlDEdtF8sRYS1drmU", "show": "De Grote Podcastlas", "title": "#45 Bosnië en Herzegovina", "duur": "79 min"},
     practical: [
       {"label": "Inreis", "group": "Voor je vertrekt", "t": "Een Belgische identiteitskaart of een paspoort volstaat. Je moet je aankomst binnen 48 uur laten registreren. Hotels en andere accommodaties doen dat voor je en geven je een bewijs dat je bij het vertrek kunt moeten tonen.", "ok": true},
       {"label": "Beste reistijd", "group": "Voor je vertrekt", "t": "Mei, juni, september en oktober zijn aangenaam. In de zomer wordt het heet en in de winter ligt er sneeuw in de bergen."},
