@@ -25,6 +25,15 @@
     return window.PHOTO_BASE + src;
   }
 
+  // Een of meer waarschuwingsblokken; meerdere komen naast elkaar te staan.
+  function warnBlocks(w) {
+    var list = [].concat(w);
+    var html = list.map(function (x) {
+      return '<div class="warn-box" role="note"><b>' + esc(x.label || "Waarschuwing") + "</b><p>" + esc(x.h) + "</p>" + (x.p ? "<p>" + esc(x.p) + "</p>" : "") + "</div>";
+    }).join("");
+    return list.length > 1 ? '<div class="warn-row">' + html + "</div>" : html;
+  }
+
   function photo(p, cls) {
     p = p || {};
     if (p.src) {
@@ -402,7 +411,7 @@ function section(title, inner, sub, cls) {
       (a.ok === false ? '<p class="concept-note s-note">Concept: dit is nog niet bevestigd.</p>' : "") +
       (a.body ? '<div class="s-body">' + a.body.map(function (b) { if (b.box) return '<div class="story-box" role="note"><b>' + esc(b.label || "Leuke anekdote") + "</b>" + b.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>"; return "<h2>" + esc(b.h) + "</h2>" + b.p.map(function (p) { return "<p>" + rich(p) + "</p>"; }).join(""); }).join("") + "</div>" : "") +
       (kids.length ? '<div class="places city-places" data-n="' + (kids.length > 3 ? "many" : kids.length) + '">' + kids.map(function (k) { return '<a class="place" href="' + cpath(c) + k.slug + '/">' + photo(k.photos[0]) + "<h3>" + esc(k.t) + "</h3>" + (k.text ? "<p>" + esc(excerpt(k.text, 90)) + "</p>" : "") + "</a>"; }).join("") + "</div>" : "") +
-      (a.warn ? '<div class="warn-box" role="note"><b>Waarschuwing</b><p>' + esc(a.warn.h) + "</p>" + (a.warn.p ? "<p>" + esc(a.warn.p) + "</p>" : "") + "</div>" : "") +
+      (a.warn ? warnBlocks(a.warn) : "") +
       (a.goldTip ? '<div class="gold-box" role="note"><b>' + esc(a.goldTip.label || "Gouden tip") + "</b>" + a.goldTip.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>" : "") +
       (a.mening ? '<div class="mening-box" id="mening" role="note"><b>Onze mening</b><div class="snorren" role="img" aria-label="' + a.mening.score + ' van 5 snorren">' + [1, 2, 3, 4, 5].map(function (i) { return '<img src="images/logo/snor.webp" alt="" width="40" height="13"' + (i > a.mening.score ? ' class="leeg"' : "") + ">"; }).join("") + "<span>" + a.mening.score + " van 5</span></div>" + a.mening.p.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") + "</div>" : "") +
       (a.gallery ? gallery(a.gallery, a.stravaEmbed, a.frameHtml) : a.city ? "" : '<div class="s-photos' + (n === 2 ? " two" : "") + '">' + a.photos.map(figure).join("") + "</div>") +
