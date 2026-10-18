@@ -579,8 +579,8 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
 
 /* ---------- podcast: kleine kaart rechtsonder in de openingsfoto ---------- */
 .podcast-hero { position: absolute; left: 0; right: 0; bottom: 80px; z-index: 3; display: flex; justify-content: flex-end; pointer-events: none; }
-.podcast-kaart { pointer-events: auto; display: inline-flex; align-items: center; gap: 11px; max-width: 300px; padding: 9px 15px 9px 11px; border-radius: 10px; background: #b4440a; color: #fff !important; text-decoration: none; text-shadow: none !important; box-shadow: 0 8px 24px rgba(0,0,0,.28); transition: transform .2s ease, background .2s ease; }
-.podcast-kaart:hover { background: #9b3a08; transform: translateY(-1px); }
+.podcast-kaart { pointer-events: auto; display: inline-flex; align-items: center; gap: 11px; max-width: 300px; padding: 9px 15px 9px 11px; border-radius: 10px; background: #17403d; color: #fff !important; text-decoration: none; text-shadow: none !important; box-shadow: 0 8px 24px rgba(0,0,0,.28); transition: transform .2s ease, background .2s ease; }
+.podcast-kaart:hover { background: #1f5551; transform: translateY(-1px); }
 .podcast-kaart svg { width: 30px; height: 30px; flex: none; }
 .podcast-kaart b { display: block; font-size: 14px; line-height: 1.25; }
 .podcast-kaart small { display: block; margin-top: 1px; font-size: 12px; line-height: 1.3; opacity: .9; }

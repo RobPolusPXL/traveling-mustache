@@ -338,8 +338,8 @@ function section(title, inner, sub, cls) {
   function podcastKaart(p) {
     if (!p) return "";
     return '<div class="wrap podcast-hero"><a class="podcast-kaart" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fff"/><g fill="none" stroke="#b4440a" stroke-linecap="round" stroke-width="1.9"><path d="M5.8 9c4.1-1.1 8.8-.7 12.6 1.5"/><path d="M6.6 12.2c3.4-.9 7.2-.6 10.3 1.2"/><path d="M7.3 15.1c2.9-.7 5.9-.4 8.4 1"/></g></svg>' +
-      "<span><b>Luister naar de podcast</b><small>" + esc(p.show) + " · " + esc(p.title) + "</small></span></a></div>";
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fff"/><g fill="none" stroke="#17403d" stroke-linecap="round" stroke-width="1.9"><path d="M5.8 9c4.1-1.1 8.8-.7 12.6 1.5"/><path d="M6.6 12.2c3.4-.9 7.2-.6 10.3 1.2"/><path d="M7.3 15.1c2.9-.7 5.9-.4 8.4 1"/></g></svg>' +
+      "<span><b>Luister naar de Podcastlas</b><small>" + esc(p.show) + " · " + esc(p.title) + "</small></span></a></div>";
   }
 
   function renderCountry(c) {
