@@ -576,3 +576,13 @@ body.has-hero .site-head .nav-dd-col a:hover { color: var(--accent); }
   body.menu-open.has-hero .site-head nav > a, body.menu-open.has-hero .site-head .nav-dd > a { color: var(--ink); text-shadow: none; }
   .nav-dd.open > a { color: var(--accent) !important; }
 }
+
+/* ---------- podcast ---------- */
+.podcast-note { margin: 4px 0 18px; color: var(--muted, #6b7a76); }
+.podcast-var { margin: 22px 0 10px; font: 700 13px/1.2 var(--sans, inherit); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.podcast-link { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid var(--line); border-radius: 14px; background: #fff; text-decoration: none; color: var(--ink); transition: box-shadow .2s ease, transform .2s ease; max-width: 560px; }
+.podcast-link:hover { box-shadow: 0 8px 26px rgba(0,0,0,.12); transform: translateY(-1px); }
+.podcast-link svg { width: 48px; height: 48px; flex: none; }
+.podcast-link b { display: block; font-size: 18px; }
+.podcast-link small { display: block; margin-top: 2px; font-size: 14px; color: var(--muted, #6b7a76); }
+.podcast-embed { display: block; border: 0; max-width: 100%; }

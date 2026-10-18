@@ -29,6 +29,7 @@
       { label: "Junkanoo", t: "Het grote straatfeest met optochten, muziek en kostuums, op 26 december en 1 januari." },
       { label: "Andere eilanden", t: "De Exuma's met de zwemmende varkens, Eleuthera met zijn roze stranden en Paradise Island, bekend van het Atlantis-resort. Die zagen wij niet." }
     ],
+    podcast: {"url": "https://open.spotify.com/episode/233s4TC3r1rV0h6sCR1nRw", "embed": "https://open.spotify.com/embed/episode/233s4TC3r1rV0h6sCR1nRw", "show": "De Grote Podcastlas", "title": "#93 Bahama's", "duur": "51 min"},
     tips: ["Ben je in Florida en wil je naar de Bahamas? Kijk dan eens naar een MSC-cruise vanuit Port Canaveral of Fort Lauderdale. Dat kan een betere prijs-kwaliteitverhouding geven dan een dure daguitstap naar Bimini. Een garantie is het niet: cruises kunnen ook heel duur zijn, maar ze zijn vaak ook spotgoedkoop. Je hebt dan meteen een cruise-ervaring erbij."],
     practical: [
       { label: "Inreis", group: "Voor je vertrekt", t: "Per vliegtuig of per cruise gelden dezelfde voorwaarden: als Belg heb je een paspoort nodig dat minstens zes maanden geldig is. Voor een kort verblijf als toerist is geen visum nodig. Bij het inschepen wordt dit gecontroleerd. Het is belangrijk dat je je afgedrukte ESTA kunt voorleggen: die heb je nodig om de VS weer binnen te mogen. Check de regels vlak voor vertrek.", ok: true },
