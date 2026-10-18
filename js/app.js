@@ -762,4 +762,7 @@ function section(title, inner, sub, cls) {
   window.addEventListener("hashchange", route);
   window.addEventListener("popstate", route);
   route();
+  if ("serviceWorker" in navigator && !window.__PRERENDER && location.protocol !== "file:") {
+    window.addEventListener("load", function () { navigator.serviceWorker.register(new URL("sw.js", document.baseURI).href).catch(function () {}); });
+  }
 })();
