@@ -717,6 +717,27 @@ function section(title, inner, sub, cls) {
     menuDropdown("./#pretparken", perLand, true);
   })();
 
+  // op smalle schermen (geen hover): een tik op Bestemmingen, Onze reizen of Pretparken klapt het uitklapmenu open
+  (function () {
+    var smal = window.matchMedia("(max-width: 960px)");
+    function sluit() {
+      document.body.classList.remove("menu-open");
+      Array.prototype.forEach.call(document.querySelectorAll(".nav-dd.open"), function (d) { d.classList.remove("open"); });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll(".nav-dd > a"), function (a) {
+      a.addEventListener("click", function (e) {
+        if (!smal.matches) return;
+        e.preventDefault();
+        var dd = a.parentNode, was = dd.classList.contains("open");
+        sluit();
+        if (!was) { dd.classList.add("open"); document.body.classList.add("menu-open"); }
+      });
+    });
+    document.addEventListener("click", function (e) { if (smal.matches && (!e.target.closest || !e.target.closest(".nav-dd") || e.target.closest(".nav-dd-panel a"))) sluit(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") sluit(); });
+    window.addEventListener("resize", function () { if (!smal.matches) sluit(); });
+  })();
+
   renderHome();
   renderMap();
   (function () {
