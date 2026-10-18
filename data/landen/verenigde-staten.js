@@ -460,9 +460,9 @@
         ],
         "story": [
           {
-            "label": "Leuke anekdote",
+            "label": "Leuke anekdote uit 2013",
             "p": [
-              "We hadden staanplaatsen in de nosebleeds. Een NBA-wedstrijd duurt langer dan je denkt, en het is best lang om rechtop te staan. Tijdens de rust ging een deel van een gezelschap dat zitplaatsen had vlak onder ons naar huis. De mensen die bleven vroegen of we wilden zitten, en dat namen we maar al te graag aan. De tweede helft zagen we dus zittend."
+              "Toen hadden we staanplaatsen in de nosebleeds. Een NBA-wedstrijd duurt langer dan je denkt, en het is best lang om rechtop te staan. Tijdens de rust ging een deel van een gezelschap dat zitplaatsen had vlak onder ons naar huis. De mensen die bleven vroegen of we wilden zitten, en dat namen we maar al te graag aan. De tweede helft zagen we dus zittend."
             ],
             "closing": "Dank aan deze vriendelijke Amerikanen."
           }
