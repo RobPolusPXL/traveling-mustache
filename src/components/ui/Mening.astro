@@ -1,0 +1,10 @@
+---
+import Snorren from "./Snorren.astro";
+const { score, p } = Astro.props;
+const tekst = String(score).replace(".", ",");
+---
+<div class="mening-box" id="mening" role="note">
+  <b>Onze mening</b>
+  <div class="snorren" role="img" aria-label={`${tekst} van 5 snorren`}><Snorren score={score} /></div>
+  {p.map((x) => <p>{x}</p>)}
+</div>

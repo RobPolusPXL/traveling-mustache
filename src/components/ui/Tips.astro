@@ -1,0 +1,6 @@
+---
+const { items, cls = "" } = Astro.props;
+---
+<ul class:list={["tips", cls, { multi: items.length > 1 }]}>
+  {items.map((x) => <li>{x}</li>)}
+</ul>

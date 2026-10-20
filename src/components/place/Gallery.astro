@@ -1,0 +1,43 @@
+---
+// Fotogalerij met tekstblokken, video's, een Strava-embed en een iframe tussen de foto's.
+import Photo from "../ui/Photo.astro";
+import { foto, rich } from "../../lib/util.js";
+import { LINK_ICONS } from "../../lib/icons.js";
+
+const { items, embed, frame } = Astro.props;
+const klassen = (x) => ({ [`sp${x.span}`]: x.span, tall: x.tall, ctr: x.center, fill: x.fill, nat: x.nat });
+// "Ter info: ..." wordt een grijs infoblok
+const infoTitel = (h) => { const m = h.match(/^Ter info: (.*)$/); return m ? m[1].charAt(0).toUpperCase() + m[1].slice(1) : null; };
+---
+<div class="d-photos hike-gal">
+  {items.map((x) => {
+    const info = x.section && infoTitel(x.section.h);
+    if (x.section) return (
+      <div class:list={["gal-text", { info }]}>
+        {info && <span class="info-label">Ter info</span>}
+        <h2>
+          {info || x.section.h}
+          {x.section.links && (
+            <Fragment>{" "}<span class="gal-links">
+              {x.section.links.map((l) => <a class={`gal-link ${l.type}`} href={l.href} rel="noopener" target="_blank" aria-label={l.label} title={l.label} set:html={LINK_ICONS[l.type] || ""} />)}
+            </span></Fragment>
+          )}
+        </h2>
+        {x.section.p.map((p) => <p set:html={rich(p)} />)}
+      </div>
+    );
+    if (x.video) return (
+      <figure class:list={["video-cell", klassen(x)]}>
+        <video controls playsinline preload="metadata" poster={foto(x.poster)} aria-label={x.alt}><source src={foto(x.video)} type="video/mp4"></video>
+      </figure>
+    );
+    if (x.frame) return <figure class="frame-cell sp6"><Fragment set:html={frame || ""} /></figure>;
+    if (x.embed) return <figure class:list={["strava-cell", klassen(x)]}><Fragment set:html={embed || ""} /></figure>;
+    return (
+      <figure class:list={[klassen(x)]}>
+        <Photo p={x} />
+        {x.caption && <figcaption>{x.href ? <a href={x.href} rel="noopener" target="_blank">{x.caption}</a> : x.caption}</figcaption>}
+      </figure>
+    );
+  })}
+</div>

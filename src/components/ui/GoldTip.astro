@@ -1,0 +1,4 @@
+---
+const { label = "Gouden tip", p } = Astro.props;
+---
+<div class="gold-box" role="note"><b>{label}</b>{p.map((x) => <p>{x}</p>)}</div>

@@ -1,7 +1,8 @@
 ---
 import Base from "../../../../layouts/Base.astro";
 import { countries, countryBySlug } from "../../../../lib/data.js";
-import { renderPlace, places } from "../../../../lib/render.js";
+import PlacePage from "../../../../components/place/PlacePage.astro";
+import { places } from "../../../../lib/places.js";
 import { excerpt } from "../../../../lib/util.js";
 import { SITE_NAME } from "../../../../config.js";
 
@@ -11,9 +12,8 @@ export function getStaticPaths() {
 
 const c = countryBySlug(Astro.params.land)!;
 const a = places(c).find((x) => x.slug === Astro.params.plaats)!;
-const html = renderPlace(c, a);
 const description = excerpt(a.text || c.tagline || c.intro || "", 155);
 ---
 <Base title={`${a.t} · ${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/${a.slug}/`} hasHero={!!(c.done && a.hero)} strava={!!a.stravaEmbed}>
-  <article id="country" set:html={html} />
+  <article id="country"><PlacePage c={c} a={a} /></article>
 </Base>

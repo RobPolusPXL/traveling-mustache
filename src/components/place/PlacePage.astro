@@ -1,0 +1,99 @@
+---
+// Inhoud van een plaatspagina (zonder <article>).
+import Hero from "../ui/Hero.astro";
+import Photo from "../ui/Photo.astro";
+import Figure from "../ui/Figure.astro";
+import PlaceCard from "../ui/PlaceCard.astro";
+import StoryBox from "../ui/StoryBox.astro";
+import WarnBlocks from "../ui/WarnBlocks.astro";
+import GoldTip from "../ui/GoldTip.astro";
+import Mening from "../ui/Mening.astro";
+import Facts from "../ui/Facts.astro";
+import Tips from "../ui/Tips.astro";
+import Arrow from "../ui/Arrow.astro";
+import Gallery from "./Gallery.astro";
+import { countryBySlug } from "../../lib/data.js";
+import { places } from "../../lib/places.js";
+import { u, cpath, excerpt, rich } from "../../lib/util.js";
+
+const { c, a } = Astro.props;
+const pl = places(c);
+const i = pl.indexOf(a);
+const prev = pl[i - 1], next = pl[i + 1];
+const parent = a.in ? pl.find((x) => x.t === a.in) : null;
+const kids = a.city ? pl.filter((x) => x.in === a.t) : [];
+const aantal = (n) => (n > 3 ? "many" : n);
+---
+{a.hero && (
+  <section class="hero short place-hero">
+    <Hero src={a.hero.src} alt={a.hero.alt} label={c.name} title={a.t} text={a.text} />
+  </section>
+)}
+<div class="wrap">
+  <div class="crumbs">
+    <a href={u("#bestemmingen")}>Bestemmingen</a> › <a href={cpath(c)}>{c.name}</a> ›{" "}
+    {parent && <Fragment><a href={`${cpath(c)}${parent.slug}/`}>{parent.t}</a> › </Fragment>}<span>{a.t}</span>
+  </div>
+
+  {!a.hero && (
+    <div class="s-head">
+      <span class="label">{c.name}</span>
+      <h1>{a.t}</h1>
+      {a.text && <p class="s-lead">{a.text}</p>}
+    </div>
+  )}
+
+  {a.ok === false && <p class="concept-note s-note">Concept: dit is nog niet bevestigd.</p>}
+
+  {a.body && (
+    <div class="s-body">
+      {a.body.map((b) => b.box
+        ? <StoryBox label={b.label} p={b.p} />
+        : <Fragment><h2>{b.h}</h2>{b.p.map((p) => <p set:html={rich(p)} />)}</Fragment>)}
+    </div>
+  )}
+
+  {kids.length > 0 && (
+    <div class="places city-places" data-n={aantal(kids.length)}>
+      {kids.map((k) => <PlaceCard href={`${cpath(c)}${k.slug}/`} photo={k.photos[0]} title={k.t} text={k.text && excerpt(k.text, 90)} />)}
+    </div>
+  )}
+
+  {a.warn && <WarnBlocks warn={a.warn} />}
+  {a.goldTip && <GoldTip {...a.goldTip} />}
+  {a.mening && <Mening {...a.mening} />}
+
+  {a.gallery
+    ? <Gallery items={a.gallery} embed={a.stravaEmbed} frame={a.frameHtml} />
+    : !a.city && <div class:list={["s-photos", { two: a.photos.length === 2 }]}>{a.photos.map((g) => <Figure g={g} />)}</div>}
+
+  {a.story && [].concat(a.story).map((st) => <StoryBox {...st} />)}
+
+  {a.practical && a.practical.length > 0 && <div class="s-practical"><h2>Praktisch</h2><Facts items={a.practical} /></div>}
+
+  {a.tips && a.tips.length > 0 && <Tips items={a.tips} cls="s-tips" />}
+
+  {a.sources && a.sources.length > 0 && a.showSources === true && (
+    <p class="s-sources">{a.sourcesLabel || "Bronnen"}: {a.sources.map((s, n) => <Fragment>{n !== 0 && " · "}<a href={s.url} rel="noopener">{s.t}</a></Fragment>)}</p>
+  )}
+
+  {a.related && (
+    <div class="s-more s-related">
+      <h2>{a.related.q}</h2>
+      <div class="s-nav">
+        {a.related.links.map((l) => (
+          <a class="prev" href={`${cpath(countryBySlug(l.c))}${l.s ? l.s + "/" : ""}`}><small>{l.small}</small><b>{l.b}</b></a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="s-more">
+    <h2>Meer in {c.name}</h2>
+    <div class="s-nav">
+      {prev && <a class="prev" href={`${cpath(c)}${prev.slug}/`}><small>Vorige</small><b>{prev.t}</b></a>}
+      {next && <a class="next" href={`${cpath(c)}${next.slug}/`}><small>Volgende</small><b>{next.t}</b></a>}
+    </div>
+    <a class="back" href={cpath(c)}><Arrow /> Terug naar {c.name}</a>
+  </div>
+</div>

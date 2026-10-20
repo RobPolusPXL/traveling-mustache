@@ -1,5 +1,5 @@
 import { countries, trips } from "../lib/data.js";
-import { places } from "../lib/render.js";
+import { places } from "../lib/places.js";
 import { BASE } from "../lib/util.js";
 
 export function GET({ site }) {

@@ -1,33 +1,74 @@
 ---
-import { homeParts, mapData } from "../lib/render.js";
+import Hero from "./ui/Hero.astro";
+import Carousel from "./ui/Carousel.astro";
+import PlaceCard from "./ui/PlaceCard.astro";
+import { homeData, mapData, FLAGS } from "../lib/home.js";
+import { cpath, tpath, excerpt } from "../lib/util.js";
 
-const p = homeParts();
-const json = JSON.stringify(mapData()).replace(/</g, "\\u003c");
+const { trips, continents, soon, parks } = homeData();
+const kaartData = JSON.stringify(mapData()).replace(/</g, "\\u003c");
 ---
 <main id="home">
-  <section class="hero" id="hero" set:html={p.heroHtml} />
+  <section class="hero" id="hero">
+    <Hero src="images/home/hangmat-panorama.webp" alt="Rob en Joke in een hangmat, met zicht op zee tussen de palmen"
+      label="Reisblog van Rob en Joke" title="Op zoek naar unieke plaatsen"
+      text="Reisinspiratie per land, enkel over plaatsen en dingen die we zelf beleefden." />
+  </section>
+
   <section class="wrap" id="bestemmingen">
     <div class="block-head"><h2>Bestemmingen</h2><p>De praktische kant: wanneer gaan, er geraken en wat de moeite waard is.</p></div>
-    <div class="grid" id="grid" set:html={p.gridHtml} />
-    <div class="soon-list" id="soon" set:html={p.soonHtml} />
+    <div class="grid" id="grid">
+      {continents.map((g) => (
+        <section class="cont">
+          {continents.length > 1 && <h3 class="grid-cont">{g.name}</h3>}
+          <Carousel>
+            {g.items.map((c) => (
+              <PlaceCard href={cpath(c)} photo={c.cover && c.cover.src ? { src: c.cover.src, alt: c.cover.alt } : { alt: c.name }}
+                flag={FLAGS[c.slug]} title={c.name} text={c.tagline} />
+            ))}
+          </Carousel>
+        </section>
+      ))}
+    </div>
+    <div class="soon-list" id="soon">
+      {soon.length > 0 && (
+        <Fragment>
+          <h3>Hier volgen nog meer bestemmingen</h3>
+          <ul>{soon.map((c) => <li><a class="chip" href={cpath(c)}>{c.name}</a></li>)}</ul>
+        </Fragment>
+      )}
+    </div>
   </section>
+
   <section class="wrap map-wrap" id="kaart">
     <div class="block-head">
       <h2>Op de kaart</h2>
       <p>Klik op een land om de bestemming te bekijken.</p>
     </div>
     <div id="map" role="region" aria-label="Wereldkaart met bezochte landen"></div>
-    <script type="application/json" id="map-data" set:html={json} />
+    <script type="application/json" id="map-data" set:html={kaartData} />
   </section>
+
   <section class="wrap" id="reizen">
     <div class="block-head">
       <h2>Onze reizen</h2>
       <p>Het verhaal van elke reis, dag per dag.</p>
     </div>
-    <div class="grid" id="trips" set:html={p.tripsHtml} />
+    <div class="grid" id="trips">
+      <Carousel>
+        {trips.map((t) => <PlaceCard href={tpath(t)} photo={t.cover} label={`${t.period} · ${t.nights} nachten`} title={t.title} text={t.tagline} />)}
+      </Carousel>
+    </div>
   </section>
-  <section class="wrap" id="pretparken" hidden={!p.hasParks}>
+
+  <section class="wrap" id="pretparken" hidden={parks.length === 0}>
     <div class="block-head"><h2>Pretparken</h2><p>Achtbanen, wachtrijen en tips voor de parken die we bezochten.</p></div>
-    <div class="grid" id="parks" set:html={p.parksHtml} />
+    <div class="grid" id="parks">
+      <Carousel>
+        {parks.map(({ c, a }) => (
+          <PlaceCard href={`${cpath(c)}${a.slug}/`} photo={a.hero ? a.hero : a.photos[0]} label={`Pretpark · ${c.name}`} title={a.t} text={a.text && excerpt(a.text, 110)} />
+        ))}
+      </Carousel>
+    </div>
   </section>
 </main>

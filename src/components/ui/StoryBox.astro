@@ -1,0 +1,8 @@
+---
+const { label = "Leuke anekdote", p, closing } = Astro.props;
+---
+<div class="story-box" role="note">
+  <b>{label}</b>
+  {p.map((x) => <p>{x}</p>)}
+  {closing && <p class="closing">{closing}</p>}
+</div>

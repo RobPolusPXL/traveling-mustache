@@ -1,0 +1,89 @@
+---
+// Inhoud van een landpagina (zonder <article>).
+import Hero from "../ui/Hero.astro";
+import Section from "../ui/Section.astro";
+import PlaceCard from "../ui/PlaceCard.astro";
+import Facts from "../ui/Facts.astro";
+import Tips from "../ui/Tips.astro";
+import Figure from "../ui/Figure.astro";
+import FactsStrip from "./FactsStrip.astro";
+import PodcastKaart from "./PodcastKaart.astro";
+import Plist from "./Plist.astro";
+import GetThere from "./GetThere.astro";
+import { trips } from "../../lib/data.js";
+import { places, topPlaces, countryMapPins } from "../../lib/places.js";
+import { cpath, tpath, excerpt } from "../../lib/util.js";
+
+const { c } = Astro.props;
+const top = topPlaces(c);
+const rest = (c.activities || []).filter((a) => !(a.photos && a.photos.length));
+const metKaart = !!countryMapPins(c);
+const aantal = metKaart ? "2map" : top.length > 3 ? "many" : top.length;
+const eigenReizen = trips.filter((t) => t.countries.includes(c.slug));
+
+// Praktische info: gegroepeerd als er groepen zijn, anders als losse feitjes
+const groepen = [];
+for (const f of c.practical || []) {
+  const naam = f.group || "Overig";
+  let g = groepen.find((x) => x.naam === naam);
+  if (!g) groepen.push((g = { naam, items: [] }));
+  g.items.push(f);
+}
+const heeftGroepen = (c.practical || []).some((f) => f.group);
+---
+<section class:list={["hero", "short", { "has-podcast": c.podcast }]}>
+  <Hero src={c.cover.src} alt={c.cover.alt} label="Bestemming" title={c.name} text={c.tagline} />
+  <PodcastKaart p={c.podcast} />
+</section>
+{c.facts && c.facts.length > 0 && <FactsStrip facts={c.facts} />}
+<PodcastKaart p={c.podcast} mob />
+<div class="wrap">
+  <div class="c-body">
+    <div><p class="intro">{c.intro}</p></div>
+    {eigenReizen.length > 0 && (
+      <aside class="fact-card">
+        <h2>Onze reizen hier</h2>
+        <dl>
+          {eigenReizen.map((t) => <div><dt><a href={tpath(t)}>{t.period}</a></dt><dd>{t.nights} nachten</dd></div>)}
+        </dl>
+      </aside>
+    )}
+  </div>
+
+  {top.length > 0 && (
+    <Section title="Dingen die we deden">
+      <div class="places" data-n={aantal}>
+        {top.map((a) => <PlaceCard href={`${cpath(c)}${a.slug}/`} photo={a.photos[0]} title={a.t} text={a.text && excerpt(a.text, 90)} />)}
+        {metKaart && <div class="place-map" id="countryMap" aria-hidden="true"></div>}
+      </div>
+      {rest.length > 0 && (
+        <div class="also">
+          <h3>Ook gedaan</h3>
+          <ul>{rest.map((a) => <li><span class:list={["chip", { concept: a.ok === false }]}>{a.t}</span></li>)}</ul>
+        </div>
+      )}
+    </Section>
+  )}
+
+  {c.getThere && c.getThere.length > 0 && (
+    <Section title="Er geraken anno 2026" sub="Rechtstreekse vluchten, stand oktober 2026.">
+      <GetThere items={c.getThere} />
+    </Section>
+  )}
+
+  {c.weetjes && c.weetjes.length > 0 && <Section title="Wist je dat?"><Facts items={c.weetjes} /></Section>}
+
+  {c.tips && c.tips.length > 0 && <section class="block"><Tips items={c.tips} /></section>}
+
+  {c.practical && c.practical.length > 0 && (
+    <Section title="Praktisch">
+      {heeftGroepen
+        ? <div class="pgroups">{groepen.map((g) => <div class="pgroup"><h3>{g.naam}</h3><Plist items={g.items} /></div>)}</div>
+        : <Facts items={c.practical} />}
+    </Section>
+  )}
+
+  {c.gallery && c.gallery.length > 0 && (
+    <Section title="Meer foto's"><div class="gallery">{c.gallery.map((g) => <Figure g={g} />)}</div></Section>
+  )}
+</div>

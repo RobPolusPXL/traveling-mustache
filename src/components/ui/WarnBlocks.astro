@@ -1,0 +1,8 @@
+---
+// Een of meer waarschuwingsblokken; meerdere komen naast elkaar te staan.
+import WarnBox from "./WarnBox.astro";
+const list = [].concat(Astro.props.warn);
+---
+{list.length > 1
+  ? <div class="warn-row">{list.map((x) => <WarnBox {...x} />)}</div>
+  : <WarnBox {...list[0]} />}

@@ -1,0 +1,13 @@
+---
+// Kaart met foto, titel en korte tekst. Optioneel een vlag of een label boven de titel.
+import Photo from "./Photo.astro";
+import { u } from "../../lib/util.js";
+const { href, photo, title, text, label, flag } = Astro.props;
+---
+<a class="place" href={href}>
+  <Photo p={photo} />
+  {flag && <img class="dest-flag" src={u(`images/flags/${flag}.svg`)} alt="" loading="lazy">}
+  {label && <span class="label">{label}</span>}
+  <h3>{title}</h3>
+  {text && <p>{text}</p>}
+</a>

@@ -1,0 +1,10 @@
+---
+// Score met snorren; een score met .5 krijgt een halve snor.
+import Snor from "./Snor.astro";
+const { score } = Astro.props;
+---
+{[1, 2, 3, 4, 5].map((i) =>
+  i <= score ? <Snor />
+  : i - 0.5 === score ? <i class="half"><Snor cls="leeg" /><Snor cls="vol" /></i>
+  : <Snor cls="leeg" />)}
+<span>{String(score).replace(".", ",")} van 5</span>

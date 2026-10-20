@@ -1,0 +1,15 @@
+---
+// Lijst met label links en waarde rechts (optioneel als gekleurde pil, optioneel met link).
+const { items } = Astro.props;
+---
+<dl class="plist">
+  {items.map((f) => (
+    <div class:list={[{ concept: f.ok === false }]}>
+      <dt>{f.label}</dt>
+      <dd>
+        {f.tone ? <span class={`pill-${f.tone}`}>{f.t}</span> : f.t}
+        {f.link && <Fragment>{" "}<a class="fact-link" href={f.link.href} target="_blank" rel="noopener">{f.link.label}</a></Fragment>}
+      </dd>
+    </div>
+  ))}
+</dl>

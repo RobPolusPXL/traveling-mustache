@@ -1,0 +1,4 @@
+---
+const { label = "Waarschuwing", h, p } = Astro.props;
+---
+<div class="warn-box" role="note"><b>{label}</b><p>{h}</p>{p && <p>{p}</p>}</div>

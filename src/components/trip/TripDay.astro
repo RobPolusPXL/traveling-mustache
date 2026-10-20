@@ -1,0 +1,30 @@
+---
+// Eén dag in het reisverhaal, met foto's, tips en links naar de plaatsen die we bezochten.
+import Figure from "../ui/Figure.astro";
+import Tips from "../ui/Tips.astro";
+import Arrow from "../ui/Arrow.astro";
+import { findPlace } from "../../lib/places.js";
+import { cpath } from "../../lib/util.js";
+
+const { d, nr, countries } = Astro.props;
+const links = (d.places || []).map((slug) => findPlace(countries, slug)).filter(Boolean);
+---
+<article class="day" id={`dag-${nr}`}>
+  <header>
+    <span class="dnum">Dag {nr}</span>
+    <span class="ddate">{d.date}</span>
+    {d.temp && <span class="dtemp">{d.temp}°</span>}
+    <h3>{d.title}</h3>
+  </header>
+  <div class="dbody">{d.text.map((p) => <p>{p}</p>)}</div>
+  {d.photos && d.photos.length > 0 && (
+    <div class={`d-photos n${Math.min(d.photos.length, 5)}`}>{d.photos.map((g) => <Figure g={g} />)}</div>
+  )}
+  {d.tips && d.tips.length > 0 && <Tips items={d.tips} />}
+  {links.length > 0 && (
+    <div class="dlinks">
+      <span>Meer over</span>
+      {links.map(({ c, a }) => <a class="chip" href={`${cpath(c)}${a.slug}/`}>{a.t} <Arrow /></a>)}
+    </div>
+  )}
+</article>

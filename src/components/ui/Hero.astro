@@ -1,0 +1,14 @@
+---
+// Openingsfoto met titel; de slot is voor iets rechtsonder (bv. een stempel).
+import { foto } from "../../lib/util.js";
+const { src, alt, label, title, text } = Astro.props;
+---
+<img src={foto(src)} alt={alt} fetchpriority="high">
+<div class="wrap hero-text">
+  <div>
+    {label && <span class="label">{label}</span>}
+    <h1>{title}</h1>
+    {text && <p>{text}</p>}
+  </div>
+  <slot />
+</div>

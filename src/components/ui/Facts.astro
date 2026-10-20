@@ -1,0 +1,7 @@
+---
+// Rij met feitjes: vet label + tekst.
+const { items } = Astro.props;
+---
+<div class="facts">
+  {items.map((f) => <div class:list={["fact", { concept: f.ok === false }]}><b>{f.label}</b><span>{f.t}</span></div>)}
+</div>

@@ -1,0 +1,10 @@
+---
+import Arrow from "../ui/Arrow.astro";
+import { u } from "../../lib/util.js";
+const { c } = Astro.props;
+---
+<div class="wrap">
+  <a class="back" href={u("#bestemmingen")}><Arrow /> Alle bestemmingen</a>
+  <h1 style="font-size:clamp(40px,7vw,88px);margin-top:28px">{c.name}</h1>
+  <p class="intro narrow" style="margin-top:24px">Deze pagina volgt binnenkort.</p>
+</div>

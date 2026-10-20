@@ -1,0 +1,98 @@
+---
+// Inhoud van een reispagina (zonder <article>).
+import Hero from "../ui/Hero.astro";
+import Section from "../ui/Section.astro";
+import Photo from "../ui/Photo.astro";
+import Arrow from "../ui/Arrow.astro";
+import TripDay from "./TripDay.astro";
+import { countryBySlug } from "../../lib/data.js";
+import { cpath, tpath } from "../../lib/util.js";
+
+const { t } = Astro.props;
+const cs = t.countries.map(countryBySlug).filter(Boolean);
+const stempel = t.period.match(/([a-z]+) (\d{4})\s*$/i);
+const bezocht = stempel ? `${stempel[1]} ${stempel[2]}` : t.period;
+const coverVan = (c) => (c.cover && c.cover.src ? { src: c.cover.src, alt: c.cover.alt } : { alt: c.name });
+---
+<section class="hero short">
+  <Hero src={t.cover.src} alt={t.cover.alt} label={t.period} title={t.title} text={t.tagline}>
+    <div class="stamp" aria-hidden="true"><div>Bezocht<b>{bezocht}</b>{t.nights} nachten</div></div>
+  </Hero>
+</section>
+<div class="wrap">
+  <div class="c-body">
+    <div>
+      <p class="intro">{t.intro}</p>
+      {t.route && t.route.length > 0 && <ol class="route" aria-label="Route">{t.route.map((r) => <li>{r}</li>)}</ol>}
+    </div>
+    <aside class="fact-card">
+      <h2>Onze reis</h2>
+      <dl>
+        <div><dt>Periode</dt><dd>{t.period}</dd></div>
+        <div><dt>Nachten</dt><dd>{t.nights}</dd></div>
+        {t.with && <div><dt>Met</dt><dd>{t.with}</dd></div>}
+        {cs.map((c) => <div><dt>Bestemming</dt><dd><a href={cpath(c)}>{c.name}</a></dd></div>)}
+      </dl>
+    </aside>
+  </div>
+
+  <Section title="Dag per dag">
+    <nav class="day-index" aria-label="Dagen">
+      {t.days.map((d, i) => <a href={`${tpath(t)}#dag-${i + 1}`}><b>{i + 1}</b><span>{d.title}</span></a>)}
+    </nav>
+    <div class="days">{t.days.map((d, i) => <TripDay d={d} nr={i + 1} countries={cs} />)}</div>
+  </Section>
+
+  {t.stays && t.stays.length > 0 && (
+    <Section title="Waar we verbleven">
+      <div class="stays">
+        {t.stays.map((s) => (
+          <div class="stay">
+            <Photo p={s.photo} />
+            <div class="where">{s.place} · {s.nights} nachten</div>
+            <h3>{s.name}</h3>
+            <p>{s.text}</p>
+            {s.perNight && <p class="pernight"><b>{s.perNight}</b> per nacht, voor ons tweeën</p>}
+          </div>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  {t.transport && t.transport.length > 0 && (
+    <Section title="Zo deden wij het">
+      <ul class="list">
+        {t.transport.map((i) => <li class:list={[{ concept: i.ok === false }]}><strong>{i.t}</strong>{i.text && <p>{i.text}</p>}</li>)}
+      </ul>
+    </Section>
+  )}
+
+  {t.costPerDay && t.costPerDay.length > 0 && (
+    <Section title="Wat het ons kostte" sub="Per dag, voor ons tweeën.">
+      <div class="cost-panel">
+        <div class="perday">
+          {t.costPerDay.map((k) => <div><b>{k.amount}</b><span>{k.label}<small>{k.sub}</small></span></div>)}
+        </div>
+        {t.costNote && (
+          <p class="verdict">{t.costNote}{t.costSource && <Fragment>{" "}<a href={t.costSource.url} rel="noopener">{t.costSource.t}</a></Fragment>}</p>
+        )}
+      </div>
+    </Section>
+  )}
+
+  <Section title="Alles over de bestemming">
+    <div class="dest-links">
+      {cs.map((c) => (
+        <a class="card dest" href={cpath(c)}>
+          <Photo p={coverVan(c)} />
+          <div>
+            <span class="label">Bestemming</span>
+            <h3>{c.name}</h3>
+            <p>Praktisch, er geraken en de plekken die we bezochten.</p>
+            <span class="more">Bekijk de bestemming <Arrow /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+</div>

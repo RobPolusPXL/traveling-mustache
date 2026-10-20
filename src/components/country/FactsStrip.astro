@@ -1,0 +1,23 @@
+---
+import { FACT_ICONS } from "../../lib/icons.js";
+import { tzText } from "../../lib/tz.js";
+const { facts } = Astro.props;
+---
+<div class="wrap">
+  <div class="facts-strip">
+    {facts.map((f) => {
+      const [tijd, verschil] = f.tz ? tzText(f.tz).split("\n") : [];
+      const regels = f.tz ? [] : f.v.split("\n");
+      return (
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true" set:html={FACT_ICONS[f.icon] || ""} />
+          <span data-tz={f.tz}>
+            <b>{f.label}</b>
+            {f.tz && <Fragment>{tijd}<small>{verschil}</small></Fragment>}
+            {!f.tz && regels.map((regel, i) => <Fragment>{i !== 0 && <br />}{regel}</Fragment>)}
+          </span>
+        </div>
+      );
+    })}
+  </div>
+</div>

@@ -1,0 +1,5 @@
+---
+import Photo from "./Photo.astro";
+const { g } = Astro.props;
+---
+<figure><Photo p={g} />{g.caption && <figcaption>{g.caption}</figcaption>}</figure>

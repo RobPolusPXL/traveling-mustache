@@ -23,9 +23,12 @@ Het adres van de site staat in `astro.config.mjs` (`SITE` en `BASE`). Bij een ei
 - `data/reizen/<slug>.js`: één bestand per reis (dag per dag, verblijven, kosten).
 - `src/pages/`: de routes. `bestemmingen/[land]/`, `bestemmingen/[land]/[plaats]/`, `reizen/[reis]/`, plus homepage, 404, sitemap en robots.txt.
 - `src/layouts/Base.astro`: de gedeelde pagina (head, header, footer, scripts).
-- `src/components/`: `Header.astro` (menu met uitklapmenu's), `Footer.astro`, `HomeMain.astro`.
-- `src/lib/render.js`: bouwt de inhoud van de land-, plaats-, reis- en homepagina's uit de data.
-- `src/lib/data.js`: leest de databestanden bij het bouwen.
+- `src/components/`: `Header.astro`, `Footer.astro`, `HomeMain.astro`, en per soort pagina een map:
+  - `ui/`: herbruikbare bouwstenen (Photo, Hero, Section, Carousel, PlaceCard, Tips, Facts, StoryBox, WarnBlocks, GoldTip, Mening, ...).
+  - `country/`: `CountryPage.astro` en de onderdelen van een landpagina.
+  - `place/`: `PlacePage.astro` en `Gallery.astro`.
+  - `trip/`: `TripPage.astro` en `TripDay.astro`.
+- `src/lib/`: logica zonder opmaak: `data.js` (leest de databestanden), `places.js`, `groups.js` (werelddelen), `menu.js`, `home.js`, `icons.js`, `tz.js`, `util.js`.
 - `src/scripts/`: gedrag in de browser (kaarten, lightbox, carrousels, menu op mobiel).
 - `src/styles/style.css`, `src/fonts/`: opmaak en lettertypes.
 - `public/`: bestanden die ongewijzigd meegaan (logo's, vlaggen, Leaflet, landgrenzen, service worker, manifest).

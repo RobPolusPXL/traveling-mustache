@@ -1,0 +1,19 @@
+---
+// Rechtstreekse vluchten per vertrekregio.
+const { items } = Astro.props;
+---
+<div class="getthere">
+  {items.map((g) => (
+    <div class="gt">
+      <h3>{g.from}</h3>
+      {g.routes.length > 0 && (
+        <ul>
+          {g.routes.map((r) => (
+            <li><b>{r.airport}</b><span>{r.airline} naar {r.to}{r.seasonal ? " · seizoensgebonden" : ""}{r.ours ? " · zo vlogen wij" : ""}</span></li>
+          ))}
+        </ul>
+      )}
+      {g.note && <p>{g.note}</p>}
+    </div>
+  ))}
+</div>
