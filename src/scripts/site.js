@@ -33,8 +33,8 @@ if (toTop) {
 /* tijdzone live berekend: zomer- of wintertijd volgt automatisch de datum */
 document.querySelectorAll("[data-tz]").forEach((span) => {
   const [a, b] = tzText(span.dataset.tz).split("\n");
-  const small = span.querySelector("small");
-  if (span.childNodes[1]) span.childNodes[1].textContent = a;
+  const tijd = span.querySelector("b")?.nextSibling, small = span.querySelector("small");
+  if (tijd && tijd.nodeType === Node.TEXT_NODE) tijd.textContent = a;
   if (small && b) small.textContent = b;
 });
 

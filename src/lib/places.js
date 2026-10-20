@@ -1,9 +1,8 @@
-import { slugify, cpath } from "./util.js";
+import { cpath } from "./util.js";
 
-// activiteiten met foto's krijgen een eigen subpagina
+// activiteiten met een eigen subpagina (de slug wordt in data.js gezet)
 export function places(c) {
-  return (c.activities || []).filter((a) => a.photos && a.photos.length)
-    .map((a) => { a.slug = slugify(a.t); return a; });
+  return (c.activities || []).filter((a) => a.slug);
 }
 
 // zoekt een plaats (op slug) in een lijst landen

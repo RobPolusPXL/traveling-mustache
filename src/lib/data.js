@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
+import { slugify } from "./util.js";
 
 const root = process.cwd();
 
@@ -21,6 +22,11 @@ function lees(dir, naam) {
 }
 
 export const countries = lees("data/landen", "LAND");
+
+// activiteiten met foto's krijgen een eigen subpagina; hun adres volgt uit de titel
+for (const c of countries) {
+  for (const a of c.activities || []) if (a.photos && a.photos.length) a.slug = slugify(a.t);
+}
 export const trips = lees("data/reizen", "REIS");
 
 export function countryBySlug(slug) { return countries.find((x) => x.slug === slug); }

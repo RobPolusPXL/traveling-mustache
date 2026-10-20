@@ -11,11 +11,9 @@ const { facts } = Astro.props;
       return (
         <div>
           <svg viewBox="0 0 24 24" aria-hidden="true" set:html={FACT_ICONS[f.icon] || ""} />
-          <span data-tz={f.tz}>
-            <b>{f.label}</b>
-            {f.tz && <Fragment>{tijd}<small>{verschil}</small></Fragment>}
-            {!f.tz && regels.map((regel, i) => <Fragment>{i !== 0 && <br />}{regel}</Fragment>)}
-          </span>
+          <span data-tz={f.tz}><b>{f.label}</b>{f.tz
+            ? <Fragment>{tijd}<small>{verschil}</small></Fragment>
+            : regels.map((regel, i) => <Fragment>{i !== 0 && <br />}{regel}</Fragment>)}</span>
         </div>
       );
     })}
