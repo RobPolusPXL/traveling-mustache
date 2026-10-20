@@ -11,6 +11,6 @@ export function getStaticPaths() {
 
 const t = trips.find((x) => x.slug === Astro.params.reis)!;
 ---
-<Base title={`${t.title} · ${SITE_NAME}`} description={t.tagline || excerpt(t.intro, 155)} path={`reizen/${t.slug}/`}>
+<Base title={`${t.title} · ${SITE_NAME}`} description={t.tagline || excerpt(t.intro, 155)} path={`reizen/${t.slug}/`} image={t.cover}>
   <article id="trip"><TripPage t={t} /></article>
 </Base>

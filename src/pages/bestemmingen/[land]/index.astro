@@ -16,7 +16,7 @@ const mapPins = c.done ? countryMapPins(c) : null;
 const description = c.done ? c.tagline || excerpt(c.intro || "", 155) : c.name + ": deze pagina volgt binnenkort.";
 const json = mapPins ? JSON.stringify({ iso: c.iso, pins: mapPins }).replace(/</g, "\\u003c") : "";
 ---
-<Base title={`${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/`} hasHero={!!c.done} noindex={!c.done} leaflet={!!mapPins}>
+<Base title={`${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/`} hasHero={!!c.done} noindex={!c.done} leaflet={!!mapPins} image={c.done ? c.cover : undefined}>
   <article id="country">{c.done ? <CountryPage c={c} /> : <CountrySoon c={c} />}</article>
   {mapPins && <script type="application/json" id="country-map-data" set:html={json} />}
 </Base>

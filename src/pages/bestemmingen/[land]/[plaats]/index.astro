@@ -14,6 +14,6 @@ const c = countryBySlug(Astro.params.land)!;
 const a = places(c).find((x) => x.slug === Astro.params.plaats)!;
 const description = excerpt(a.text || c.tagline || c.intro || "", 155);
 ---
-<Base title={`${a.t} · ${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/${a.slug}/`} hasHero={!!(c.done && a.hero)} strava={!!a.stravaEmbed}>
+<Base title={`${a.t} · ${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/${a.slug}/`} hasHero={!!(c.done && a.hero)} strava={!!a.stravaEmbed} image={a.hero || a.photos[0]}>
   <article id="country"><PlacePage c={c} a={a} /></article>
 </Base>

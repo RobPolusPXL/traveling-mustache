@@ -6,7 +6,7 @@ const { href, photo, title, text, label, flag } = Astro.props;
 ---
 <a class="place" href={href}>
   <Photo p={photo} />
-  {flag && <img class="dest-flag" src={u(`images/flags/${flag}.svg`)} alt="" loading="lazy">}
+  {flag && <img class="dest-flag" src={u(`images/flags/${flag}.svg`)} alt="" width="640" height="480" loading="lazy">}
   {label && <span class="label">{label}</span>}
   <h3>{title}</h3>
   {text && <p>{text}</p>}

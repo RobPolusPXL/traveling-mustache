@@ -1,8 +1,9 @@
 ---
 // Foto uit { src, alt }; zonder src een lege placeholder.
 import { foto } from "../../lib/util.js";
+import { fotomaat } from "../../lib/fotomaat.js";
 const { p = {}, cls = "" } = Astro.props;
 ---
 {p.src
-  ? <div class={`photo ${cls}`}><img src={foto(p.src)} alt={p.alt || ""} loading="lazy"></div>
+  ? <div class={`photo ${cls}`}><img src={foto(p.src)} alt={p.alt || ""} {...fotomaat(p.src)} loading="lazy"></div>
   : <div class={`photo empty ${cls}`} role="img" aria-label={p.alt || "Foto volgt"}></div>}

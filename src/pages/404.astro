@@ -1,8 +1,24 @@
 ---
 import Base from "../layouts/Base.astro";
-import HomeMain from "../components/HomeMain.astro";
-import { HOME_DESC, SITE_NAME } from "../config.js";
+import Arrow from "../components/ui/Arrow.astro";
+import { countries } from "../lib/data.js";
+import { byName } from "../lib/groups.js";
+import { u, cpath } from "../lib/util.js";
+import { SITE_NAME } from "../config.js";
+
+const bestemmingen = countries.filter((c) => c.done).sort(byName);
 ---
-<Base title={SITE_NAME} description={HOME_DESC} path="" noindex leaflet>
-  <HomeMain />
+<Base title={`Pagina niet gevonden · ${SITE_NAME}`} description="Deze pagina bestaat niet." path="404.html" hasHero={false} noindex>
+  <main class="wrap">
+    <div class="s-head">
+      <span class="label">Fout 404</span>
+      <h1>Pagina niet gevonden</h1>
+      <p class="s-lead">Deze pagina bestaat niet of is verplaatst.</p>
+    </div>
+    <div class="also">
+      <h3>Bestemmingen</h3>
+      <ul>{bestemmingen.map((c) => <li><a class="chip" href={cpath(c)}>{c.name}</a></li>)}</ul>
+    </div>
+    <div class="s-more"><a class="back" href={u("")}><Arrow /> Naar de homepage</a></div>
+  </main>
 </Base>

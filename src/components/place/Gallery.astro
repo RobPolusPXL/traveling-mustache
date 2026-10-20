@@ -3,6 +3,7 @@
 import Photo from "../ui/Photo.astro";
 import { foto, rich } from "../../lib/util.js";
 import { LINK_ICONS } from "../../lib/icons.js";
+import { fotomaat } from "../../lib/fotomaat.js";
 
 const { items, embed, frame } = Astro.props;
 const klassen = (x) => ({ [`sp${x.span}`]: x.span, tall: x.tall, ctr: x.center, fill: x.fill, nat: x.nat });
@@ -28,7 +29,7 @@ const infoTitel = (h) => { const m = h.match(/^Ter info: (.*)$/); return m ? m[1
     );
     if (x.video) return (
       <figure class:list={["video-cell", klassen(x)]}>
-        <video controls playsinline preload="metadata" poster={foto(x.poster)} aria-label={x.alt}><source src={foto(x.video)} type="video/mp4"></video>
+        <video controls playsinline preload="metadata" poster={foto(x.poster)} {...fotomaat(x.poster)} aria-label={x.alt}><source src={foto(x.video)} type="video/mp4"></video>
       </figure>
     );
     if (x.frame) return <figure class="frame-cell sp6"><Fragment set:html={frame || ""} /></figure>;

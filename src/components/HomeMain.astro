@@ -4,13 +4,14 @@ import Carousel from "./ui/Carousel.astro";
 import PlaceCard from "./ui/PlaceCard.astro";
 import { homeData, mapData, FLAGS } from "../lib/home.js";
 import { cpath, tpath, excerpt } from "../lib/util.js";
+import { HOME_IMAGE } from "../config.js";
 
 const { trips, continents, soon, parks } = homeData();
 const kaartData = JSON.stringify(mapData()).replace(/</g, "\\u003c");
 ---
 <main id="home">
   <section class="hero" id="hero">
-    <Hero src="images/home/hangmat-panorama.webp" alt="Rob en Joke in een hangmat, met zicht op zee tussen de palmen"
+    <Hero src={HOME_IMAGE.src} alt={HOME_IMAGE.alt}
       label="Reisblog van Rob en Joke" title="Op zoek naar unieke plaatsen"
       text="Reisinspiratie per land, enkel over plaatsen en dingen die we zelf beleefden." />
   </section>

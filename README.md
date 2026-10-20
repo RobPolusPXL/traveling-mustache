@@ -10,7 +10,10 @@ Gebouwd met [Astro](https://astro.build): een statische site met echte adressen 
 npm install        # eenmalig
 npm run dev        # lokaal bekijken op http://localhost:4321/traveling-mustache/
 npm run build      # bouwt de site in dist/ (dist/ staat niet in git)
+npm run check      # typecontrole van de code (draait ook in GitHub Actions)
 ```
+
+Bij het bouwen worden de databestanden gecontroleerd (`src/lib/schema.js`). Een tikfout in een veldnaam, een ontbrekende `alt` of een ontbrekend verplicht veld stopt de build met de bestandsnaam en de plaats van de fout.
 
 Bij een push naar `dev` bouwt GitHub Actions de site en zet hem op GitHub Pages (`.github/workflows/deploy.yml`).
 Eenmalig instellen: Settings > Pages > Source = "GitHub Actions".
@@ -28,7 +31,7 @@ Het adres van de site staat in `astro.config.mjs` (`SITE` en `BASE`). Bij een ei
   - `country/`: `CountryPage.astro` en de onderdelen van een landpagina.
   - `place/`: `PlacePage.astro` en `Gallery.astro`.
   - `trip/`: `TripPage.astro` en `TripDay.astro`.
-- `src/lib/`: logica zonder opmaak: `data.js` (leest de databestanden), `places.js`, `groups.js` (werelddelen), `menu.js`, `home.js`, `icons.js`, `tz.js`, `util.js`.
+- `src/lib/`: logica zonder opmaak: `data.js` (leest de databestanden), `schema.js` (controle van de data), `fotomaat.js` (afmetingen van foto's), `places.js`, `groups.js` (werelddelen), `menu.js`, `home.js`, `icons.js`, `tz.js`, `util.js`.
 - `src/scripts/`: gedrag in de browser (kaarten, lightbox, carrousels, menu op mobiel).
 - `src/styles/style.css`, `src/fonts/`: opmaak en lettertypes.
 - `public/`: bestanden die ongewijzigd meegaan (logo's, vlaggen, Leaflet, landgrenzen, service worker, manifest).
@@ -36,6 +39,8 @@ Het adres van de site staat in `astro.config.mjs` (`SITE` en `BASE`). Bij een ei
 ## Foto's
 
 Foto's staan op originele kwaliteit in de aparte repo `traveling-mustache-fotos` (GitHub Pages). In de data verwijzen ze naar `images/<land>/...`; bij het bouwen wordt daar het adres van de fotorepo voor gezet (`src/config.js`). Alleen logo, vlaggen en de homepagina-foto staan in `public/images/`.
+
+De afmetingen van de foto's staan in `data/fotomaten.json`, zodat de pagina niet verspringt tijdens het laden. Vóór elke build vult `scripts/fotomaten.mjs` dat bestand aan met nieuwe foto's (het leest alleen de eerste bytes van elk nieuw bestand uit de fotorepo). De foto's zelf worden niet aangepast.
 
 ## Git
 
