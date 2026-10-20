@@ -1,0 +1,33 @@
+---
+import { homeParts, mapData } from "../lib/render.js";
+
+const p = homeParts();
+const json = JSON.stringify(mapData()).replace(/</g, "\\u003c");
+---
+<main id="home">
+  <section class="hero" id="hero" set:html={p.heroHtml} />
+  <section class="wrap" id="bestemmingen">
+    <div class="block-head"><h2>Bestemmingen</h2><p>De praktische kant: wanneer gaan, er geraken en wat de moeite waard is.</p></div>
+    <div class="grid" id="grid" set:html={p.gridHtml} />
+    <div class="soon-list" id="soon" set:html={p.soonHtml} />
+  </section>
+  <section class="wrap map-wrap" id="kaart">
+    <div class="block-head">
+      <h2>Op de kaart</h2>
+      <p>Klik op een land om de bestemming te bekijken.</p>
+    </div>
+    <div id="map" role="region" aria-label="Wereldkaart met bezochte landen"></div>
+    <script type="application/json" id="map-data" set:html={json} />
+  </section>
+  <section class="wrap" id="reizen">
+    <div class="block-head">
+      <h2>Onze reizen</h2>
+      <p>Het verhaal van elke reis, dag per dag.</p>
+    </div>
+    <div class="grid" id="trips" set:html={p.tripsHtml} />
+  </section>
+  <section class="wrap" id="pretparken" hidden={!p.hasParks}>
+    <div class="block-head"><h2>Pretparken</h2><p>Achtbanen, wachtrijen en tips voor de parken die we bezochten.</p></div>
+    <div class="grid" id="parks" set:html={p.parksHtml} />
+  </section>
+</main>

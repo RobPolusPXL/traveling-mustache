@@ -1,0 +1,17 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { trips } from "../../../lib/data.js";
+import { renderTrip } from "../../../lib/render.js";
+import { excerpt } from "../../../lib/util.js";
+import { SITE_NAME } from "../../../config.js";
+
+export function getStaticPaths() {
+  return trips.map((t) => ({ params: { reis: t.slug } }));
+}
+
+const t = trips.find((x) => x.slug === Astro.params.reis)!;
+const html = renderTrip(t);
+---
+<Base title={`${t.title} · ${SITE_NAME}`} description={t.tagline || excerpt(t.intro, 155)} path={`reizen/${t.slug}/`}>
+  <article id="trip" set:html={html} />
+</Base>

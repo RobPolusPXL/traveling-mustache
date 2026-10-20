@@ -1,0 +1,20 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { countries, countryBySlug } from "../../../lib/data.js";
+import { renderCountry } from "../../../lib/render.js";
+import { excerpt } from "../../../lib/util.js";
+import { SITE_NAME } from "../../../config.js";
+
+export function getStaticPaths() {
+  return countries.map((c) => ({ params: { land: c.slug } }));
+}
+
+const c = countryBySlug(Astro.params.land)!;
+const { html, mapPins } = renderCountry(c);
+const description = c.done ? c.tagline || excerpt(c.intro || "", 155) : c.name + ": deze pagina volgt binnenkort.";
+const json = mapPins ? JSON.stringify({ iso: c.iso, pins: mapPins }).replace(/</g, "\\u003c") : "";
+---
+<Base title={`${c.name} · ${SITE_NAME}`} description={description} path={`bestemmingen/${c.slug}/`} hasHero={!!c.done} noindex={!c.done} leaflet={!!mapPins}>
+  <article id="country" set:html={html} />
+  {mapPins && <script type="application/json" id="country-map-data" set:html={json} />}
+</Base>

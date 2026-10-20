@@ -1,0 +1,39 @@
+---
+import { menuData } from "../lib/render.js";
+import { u, esc } from "../lib/util.js";
+
+const menu = menuData();
+---
+<header class="site-head">
+  <div class="wrap">
+    <a class="logo" href={u("")}><img class="lk lk-donker" src={u("images/logo/logo-horizontaal-donker.webp")} alt="Traveling Mustache" width="1600" height="229"><img class="lk lk-wit" src={u("images/logo/logo-horizontaal-wit.webp")} alt="" width="1600" height="207"></a>
+    <nav aria-label="Hoofdmenu">
+      {
+        [
+          { href: u("#bestemmingen"), label: "Bestemmingen", cols: menu.bestemmingen, right: false },
+          { href: u("#kaart"), label: "Kaart", cols: [], right: false },
+          { href: u("#reizen"), label: "Onze reizen", cols: menu.reizen, right: true },
+          { href: u("#pretparken"), label: "Pretparken", cols: menu.pretparken, right: true },
+        ].map((m) =>
+          m.cols.length ? (
+            <div class={"nav-dd" + (m.right ? " right" : "")}>
+              <a href={m.href}>{m.label}</a>
+              <div class="nav-dd-panel">
+                {m.cols.map((g) => (
+                  <div class="nav-dd-col">
+                    <h4>{g.name}</h4>
+                    {g.items.map((i) => (
+                      <a href={i.href}>{i.label}{i.sub ? <small>{i.sub}</small> : null}</a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={m.href}>{m.label}</a>
+          )
+        )
+      }
+    </nav>
+  </div>
+</header>

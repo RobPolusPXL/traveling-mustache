@@ -2,12 +2,10 @@
 
 - `data/landen/<slug>.js`: één bestand per bestemming (teksten, plaatsen, foto's).
 - `data/reizen/<slug>.js`: één bestand per reis (dagen, foto's, kosten).
-- `data/index.js`: **gegenereerd**, niet met de hand aanpassen. Bevat per bestemming/reis alleen wat de homepage, het menu en de kaart nodig hebben.
 
-Na elke wijziging in `data/landen` of `data/reizen`: `python3 build.py` (maakt de index opnieuw en de pagina's),
-of alleen de index: `node tools/maak-index.js`.
+Na een wijziging: `npm run dev` (live bekijken) of `npm run build`. Er is geen tussenstap of gegenereerd bestand meer.
 
-De bestandsnaam moet gelijk zijn aan de slug (de tool controleert dat).
+De bestandsnaam moet gelijk zijn aan de slug (de build controleert dat).
 
 ## Nieuwe bestemming
 Maak `data/landen/<slug>.js`:

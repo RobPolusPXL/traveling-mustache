@@ -1,0 +1,8 @@
+---
+import Base from "../layouts/Base.astro";
+import HomeMain from "../components/HomeMain.astro";
+import { HOME_DESC, SITE_NAME } from "../config.js";
+---
+<Base title={SITE_NAME} description={HOME_DESC} path="" leaflet>
+  <HomeMain />
+</Base>

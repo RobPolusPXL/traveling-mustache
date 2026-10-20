@@ -1,0 +1,58 @@
+---
+import "../styles/style.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { u, BASE } from "../lib/util.js";
+import { SITE_NAME } from "../config.js";
+import figtree from "../fonts/figtree-latin-wght-normal.woff2?url";
+import bricolage from "../fonts/bricolage-grotesque-latin-wght-normal.woff2?url";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string; // pad binnen de site, bv. "bestemmingen/bahamas/" (leeg voor de homepage)
+  hasHero?: boolean;
+  noindex?: boolean;
+  leaflet?: boolean; // pagina bevat een kaart
+  strava?: boolean; // pagina bevat een Strava-embed
+}
+const { title, description, path, hasHero = true, noindex = false, leaflet = false, strava = false } = Astro.props;
+const canonical = new URL(path, Astro.site!.origin + BASE).href;
+---
+<!doctype html>
+<html lang="nl" data-base={BASE}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content={SITE_NAME}>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonical}>
+  {noindex && <meta name="robots" content="noindex">}
+  <link rel="icon" href={u("favicon.png")} type="image/png">
+  <link rel="manifest" href={u("manifest.webmanifest")}>
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preload" href={figtree} as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href={bricolage} as="font" type="font/woff2" crossorigin>
+  {leaflet && <link rel="stylesheet" href={u("vendor/leaflet/leaflet.css")}>}
+</head>
+<body class={hasHero ? "has-hero" : undefined}>
+  <Header />
+
+  <slot />
+
+  <Footer />
+
+  <button type="button" class="to-top" id="toTop" aria-label="Terug naar boven" title="Terug naar boven"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+  {leaflet && <script is:inline src={u("vendor/leaflet/leaflet.js")}></script>}
+  {strava && <script is:inline async src="https://strava-embeds.com/embed.js"></script>}
+  <script>
+    import "../scripts/site.js";
+  </script>
+</body>
+</html>
