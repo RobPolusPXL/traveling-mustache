@@ -13,10 +13,11 @@ const STIJLEN = [
   { id: "3", naam: "Minder fel, afgerond, zonder lijn" },
   { id: "4", naam: "Minder fel, afgerond, met lijn" },
   { id: "5", naam: "Huidige stijl (zoals nu)" },
+  { id: "6", naam: "Afgerond, met dunnere lijn" },
 ];
 
 export function getStaticPaths() {
-  return ["1", "2", "3", "4", "5"].map((stijl) => ({ params: { stijl } }));
+  return ["1", "2", "3", "4", "5", "6"].map((stijl) => ({ params: { stijl } }));
 }
 
 const i = STIJLEN.findIndex((s) => s.id === Astro.params.stijl);
@@ -37,9 +38,10 @@ const a = { ...park, warn: cruise.warn };
 </Base>
 
 <style is:global>
-  :is(.blokstijl-1, .blokstijl-2, .blokstijl-3, .blokstijl-4) :is(.mening-box, .gold-box, .tips, .gal-text.info, .warn-box, .story-box) { border-radius: 14px; }
+  :is(.blokstijl-1, .blokstijl-2, .blokstijl-3, .blokstijl-4, .blokstijl-6) :is(.mening-box, .gold-box, .tips, .gal-text.info, .warn-box, .story-box) { border-radius: 14px; }
   :is(.blokstijl-2, .blokstijl-3) :is(.mening-box, .gold-box, .tips, .gal-text.info, .warn-box, .story-box) { border-left: 0; }
   :is(.blokstijl-3, .blokstijl-4) :is(.mening-box, .gold-box, .tips, .gal-text.info, .warn-box, .story-box) { filter: saturate(.6) brightness(1.025); }
+  .blokstijl-6 :is(.mening-box, .gold-box, .tips, .gal-text.info, .warn-box, .story-box) { border-left-width: 2px; }
   .blok-test-nav { margin: 48px auto 64px; padding: 20px 24px; border: 2px dashed #0f766e; border-radius: 14px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
   .blok-test-nav p { margin: 0; }
   .blok-test-nav a { font-weight: 700; color: #0f766e; }
