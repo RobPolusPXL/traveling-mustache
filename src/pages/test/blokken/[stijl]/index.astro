@@ -12,22 +12,26 @@ const STIJLEN = [
   { id: "2", naam: "Afgerond, zonder lijn" },
   { id: "3", naam: "Minder fel, afgerond, zonder lijn" },
   { id: "4", naam: "Minder fel, afgerond, met lijn" },
+  { id: "5", naam: "Huidige stijl (zoals nu)" },
 ];
 
 export function getStaticPaths() {
-  return ["1", "2", "3", "4"].map((stijl) => ({ params: { stijl } }));
+  return ["1", "2", "3", "4", "5"].map((stijl) => ({ params: { stijl } }));
 }
 
 const i = STIJLEN.findIndex((s) => s.id === Astro.params.stijl);
 const stijl = STIJLEN[i];
 const volgende = STIJLEN[(i + 1) % STIJLEN.length];
 const c = countryBySlug("polen")!;
-const a = places(c).find((x) => x.slug === "energylandia")!;
+const park = places(c).find((x) => x.slug === "energylandia")!;
+// Energylandia heeft zelf geen waarschuwing; voor de vergelijking lenen we die van de MSC-cruise (enkel op deze testpagina).
+const cruise = places(countryBySlug("verenigde-staten")!).find((x) => x.slug === "cruisen-met-de-msc-seashore")!;
+const a = { ...park, warn: cruise.warn };
 ---
 <Base title={`Test blokken ${stijl.id}: ${stijl.naam}`} description="Testpagina" path={`test/blokken/${stijl.id}/`} noindex image={a.hero}>
   <article id="country" class={`blokstijl-${stijl.id}`}><PlacePage c={c} a={a} /></article>
   <div class="wrap blok-test-nav">
-    <p><b>Stijl {stijl.id} van 4:</b> {stijl.naam}</p>
+    <p><b>Stijl {stijl.id} van {STIJLEN.length}:</b> {stijl.naam}</p>
     <a href={u(`test/blokken/${volgende.id}/`)}>Volgende manier: {volgende.naam} →</a>
   </div>
 </Base>
