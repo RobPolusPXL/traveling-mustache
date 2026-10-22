@@ -363,7 +363,7 @@ footer .insta:hover span { text-decoration: underline; }
 .hike-gal figure.sp4 { grid-column: span 4; }
 .hike-gal figure.sp6 .photo { aspect-ratio: 16 / 9; }
 .hike-gal figure.tall .photo { aspect-ratio: 2 / 3; }
-.hike-gal .video-cell video { width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; display: block; background: #0b1f1c; }
+.hike-gal .video-cell video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 14px; display: block; background: #0b1f1c; }
 .hike-gal .video-cell.tall video { aspect-ratio: 2 / 3; object-fit: cover; }
 .hike-gal figure.ctr { grid-column: 3 / span 2; }
 .hike-gal .strava-cell { position: relative; border-radius: 14px; overflow: hidden; background: #f4f1ea; min-height: 0; }
