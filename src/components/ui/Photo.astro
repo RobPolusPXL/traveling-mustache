@@ -1,9 +1,11 @@
 ---
 // Foto uit { src, alt }; zonder src een lege placeholder.
+// sizes: hoe breed de foto op het scherm staat (zie lib/sizes.js); daarmee kiest de browser een kleinere versie.
 import { foto } from "../../lib/util.js";
-import { fotomaat } from "../../lib/fotomaat.js";
-const { p = {}, cls = "" } = Astro.props;
+import { fotomaat, fotoSrcset } from "../../lib/fotomaat.js";
+const { p = {}, cls = "", sizes } = Astro.props;
+const srcset = sizes ? fotoSrcset(p.src) : undefined;
 ---
 {p.src
-  ? <div class={`photo ${cls}`}><img src={foto(p.src)} alt={p.alt || ""} {...fotomaat(p.src)} loading="lazy"></div>
+  ? <div class={`photo ${cls}`}><img src={foto(p.src)} srcset={srcset} sizes={srcset && sizes} alt={p.alt || ""} {...fotomaat(p.src)} loading="lazy"></div>
   : <div class={`photo empty ${cls}`} role="img" aria-label={p.alt || "Foto volgt"}></div>}

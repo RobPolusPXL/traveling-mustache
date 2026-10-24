@@ -123,7 +123,7 @@ document.querySelectorAll(".cont-wrap").forEach((w) => {
     if (!t || t.tagName !== "IMG" || !t.closest(".photo") || t.closest("a, header, footer, .lightbox")) return;
     const scope = t.closest(".hike-gal, .d-photos, .s-photos") || t.parentNode;
     const imgs = Array.prototype.slice.call(scope.querySelectorAll(".photo img"));
-    list = imgs.map((i) => ({ src: i.currentSrc || i.src, alt: i.alt }));
+    list = imgs.map((i) => ({ src: i.src, alt: i.alt })); // altijd het origineel, niet de kleinere versie uit srcset
     idx = Math.max(0, imgs.indexOf(t));
     if (!box) build();
     show();

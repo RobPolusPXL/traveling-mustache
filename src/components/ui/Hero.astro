@@ -1,10 +1,10 @@
 ---
 // Openingsfoto met titel; de slot is voor iets rechtsonder (bv. een stempel).
 import { foto } from "../../lib/util.js";
-import { fotomaat } from "../../lib/fotomaat.js";
+import { fotomaat, fotoSrcset } from "../../lib/fotomaat.js";
 const { src, alt, label, title, text } = Astro.props;
 ---
-<img src={foto(src)} alt={alt} {...fotomaat(src)} fetchpriority="high">
+<img src={foto(src)} srcset={fotoSrcset(src)} sizes={fotoSrcset(src) && "100vw"} alt={alt} {...fotomaat(src)} fetchpriority="high">
 <div class="wrap hero-text">
   <div>
     {label && <span class="label">{label}</span>}

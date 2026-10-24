@@ -4,6 +4,7 @@ import Photo from "../ui/Photo.astro";
 import { foto, rich } from "../../lib/util.js";
 import { LINK_ICONS } from "../../lib/icons.js";
 import { fotomaat } from "../../lib/fotomaat.js";
+import { galerijSizes } from "../../lib/sizes.js";
 
 const { items, embed, frame } = Astro.props;
 const klassen = (x) => ({ [`sp${x.span}`]: x.span, tall: x.tall, ctr: x.center, fill: x.fill, nat: x.nat });
@@ -36,7 +37,7 @@ const infoTitel = (h) => { const m = h.match(/^Ter info: (.*)$/); return m ? m[1
     if (x.embed) return <figure class:list={["strava-cell", klassen(x)]}><Fragment set:html={embed || ""} /></figure>;
     return (
       <figure class:list={[klassen(x)]}>
-        <Photo p={x} />
+        <Photo p={x} sizes={galerijSizes(x)} />
         {x.caption && <figcaption>{x.href ? <a href={x.href} rel="noopener" target="_blank">{x.caption}</a> : x.caption}</figcaption>}
       </figure>
     );

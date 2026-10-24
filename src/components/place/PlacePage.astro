@@ -13,6 +13,7 @@ import Arrow from "../ui/Arrow.astro";
 import Gallery from "./Gallery.astro";
 import { countryBySlug } from "../../lib/data.js";
 import { places } from "../../lib/places.js";
+import { SIZES } from "../../lib/sizes.js";
 import { u, cpath, excerpt, rich } from "../../lib/util.js";
 
 const { c, a } = Astro.props;
@@ -64,7 +65,7 @@ const aantal = (n) => (n > 3 ? "many" : n);
 
   {a.gallery
     ? <Gallery items={a.gallery} embed={a.stravaEmbed} frame={a.frameHtml} />
-    : !a.city && <div class:list={["s-photos", { two: a.photos.length === 2 }]}>{a.photos.map((g) => <Figure g={g} />)}</div>}
+    : !a.city && <div class:list={["s-photos", { two: a.photos.length === 2 }]}>{a.photos.map((g) => <Figure g={g} sizes={a.photos.length === 2 ? SIZES.tweeFotos : SIZES.vol} />)}</div>}
 
   {a.story && [].concat(a.story).map((st) => <StoryBox {...st} />)}
 

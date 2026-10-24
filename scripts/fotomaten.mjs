@@ -1,6 +1,8 @@
-// Haalt de afmetingen op van alle foto's waar de data naar verwijst en bewaart ze in data/fotomaten.json.
-// Alleen nieuwe foto's worden opgevraagd (de eerste bytes van het bestand), de rest komt uit het bestaande JSON-bestand.
-// Draait automatisch vóór elke build (npm "prebuild"). Zonder internet blijven ontbrekende foto's gewoon zonder afmetingen.
+// Haalt de afmetingen en de beschikbare kleinere versies op van alle foto's waar de data naar verwijst,
+// en bewaart ze in data/fotomaten.json als "images/x.webp": [breedte, hoogte, [640, 1280]].
+// Bron: formaten/index.json in de fotorepo (bijgehouden door de workflow daar). Foto's die daar (nog) niet in staan,
+// krijgen hun afmetingen uit de eerste bytes van het bestand, zonder kleinere versies.
+// Draait automatisch vóór elke build (npm "prebuild"). Zonder internet blijft het bestaande bestand gewoon staan.
 import fs from "node:fs";
 import path from "node:path";
 import { webpMaat } from "../src/lib/webp.js";
@@ -26,16 +28,31 @@ async function haal(src) {
   return webpMaat(Buffer.from(await r.arrayBuffer()));
 }
 
+async function index() {
+  try {
+    const r = await fetch(RAW + "formaten/index.json");
+    return r.ok ? await r.json() : null;
+  } catch { return null; }
+}
+
 const oud = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, "utf8")) : {};
-const nieuw = {};
+const formaten = await index();
 const nodig = alleFotos();
-const ontbreekt = nodig.filter((s) => !oud[s]);
+const nieuw = {};
+const zonder = [];
+for (const s of nodig) {
+  const f = formaten && formaten[s];
+  if (f) nieuw[s] = f.v.length ? [f.w, f.h, f.v] : [f.w, f.h];
+  else if (!formaten && oud[s]) nieuw[s] = oud[s]; // geen verbinding: vorige stand houden
+  else zonder.push(s);
+}
 let mislukt = 0;
-for (let i = 0; i < ontbreekt.length; i += 16) {
-  await Promise.all(ontbreekt.slice(i, i + 16).map(async (s) => {
-    try { const m = await haal(s); if (m) oud[s] = m; else mislukt++; } catch { mislukt++; }
+for (let i = 0; i < zonder.length; i += 16) {
+  await Promise.all(zonder.slice(i, i + 16).map(async (s) => {
+    try { const m = await haal(s); if (m) nieuw[s] = m; else mislukt++; } catch { mislukt++; }
   }));
 }
-for (const s of nodig) if (oud[s]) nieuw[s] = oud[s];
-fs.writeFileSync(OUT, JSON.stringify(nieuw, null, 0).replace(/\],/g, "],\n") + "\n");
-console.log(`fotomaten: ${Object.keys(nieuw).length} foto's, ${ontbreekt.length - mislukt} nieuw opgehaald, ${mislukt} zonder afmetingen`);
+const gesorteerd = Object.fromEntries(Object.keys(nieuw).sort().map((k) => [k, nieuw[k]]));
+fs.writeFileSync(OUT, JSON.stringify(gesorteerd).replace(/\],"/g, '],\n"') + "\n");
+const metVersies = Object.values(gesorteerd).filter((m) => m[2]).length;
+console.log(`fotomaten: ${Object.keys(gesorteerd).length} foto's, ${metVersies} met kleinere versies, ${zonder.length - mislukt} zonder versies, ${mislukt} zonder afmetingen${formaten ? "" : " (formaten/index.json niet bereikbaar)"}`);

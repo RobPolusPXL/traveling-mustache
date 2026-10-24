@@ -6,6 +6,7 @@ import Photo from "../ui/Photo.astro";
 import Arrow from "../ui/Arrow.astro";
 import TripDay from "./TripDay.astro";
 import { countryBySlug } from "../../lib/data.js";
+import { SIZES } from "../../lib/sizes.js";
 import { cpath, tpath } from "../../lib/util.js";
 
 const { t } = Astro.props;
@@ -48,7 +49,7 @@ const coverVan = (c) => (c.cover && c.cover.src ? { src: c.cover.src, alt: c.cov
       <div class="stays">
         {t.stays.map((s) => (
           <div class="stay">
-            <Photo p={s.photo} />
+            <Photo p={s.photo} sizes={SIZES.half} />
             <div class="where">{s.place} · {s.nights} nachten</div>
             <h3>{s.name}</h3>
             <p>{s.text}</p>
@@ -84,7 +85,7 @@ const coverVan = (c) => (c.cover && c.cover.src ? { src: c.cover.src, alt: c.cov
     <div class="dest-links">
       {cs.map((c) => (
         <a class="card dest" href={cpath(c)}>
-          <Photo p={coverVan(c)} />
+          <Photo p={coverVan(c)} sizes={SIZES.kaart} />
           <div>
             <span class="label">Bestemming</span>
             <h3>{c.name}</h3>

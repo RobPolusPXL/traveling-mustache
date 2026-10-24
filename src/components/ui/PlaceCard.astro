@@ -2,10 +2,11 @@
 // Kaart met foto, titel en korte tekst. Optioneel een vlag of een label boven de titel.
 import Photo from "./Photo.astro";
 import { u } from "../../lib/util.js";
+import { SIZES } from "../../lib/sizes.js";
 const { href, photo, title, text, label, flag } = Astro.props;
 ---
 <a class="place" href={href}>
-  <Photo p={photo} />
+  <Photo p={photo} sizes={SIZES.kaart} />
   {flag && <img class="dest-flag" src={u(`images/flags/${flag}.svg`)} alt="" width="640" height="480" loading="lazy">}
   {label && <span class="label">{label}</span>}
   <h3>{title}</h3>
