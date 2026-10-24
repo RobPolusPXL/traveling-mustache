@@ -40,6 +40,8 @@ Het adres van de site staat in `astro.config.mjs` (`SITE` en `BASE`). Bij een ei
 
 Foto's staan op originele kwaliteit in de aparte repo `traveling-mustache-fotos` (GitHub Pages). In de data verwijzen ze naar `images/<land>/...`; bij het bouwen wordt daar het adres van de fotorepo voor gezet (`src/config.js`). Alleen logo, vlaggen en de homepagina-foto staan in `public/images/`.
 
+In de fotorepo staan naast de originelen ook kleinere versies van 640 en 1280 px breed (`formaten/`). Een workflow daar maakt ze automatisch voor nieuwe of vervangen foto's. Op de site kiest de browser via `srcset` de kleinste versie die scherp genoeg is (zie `src/lib/sizes.js`); de lightbox toont altijd het origineel.
+
 De afmetingen van de foto's staan in `data/fotomaten.json`, zodat de pagina niet verspringt tijdens het laden. Vóór elke build vult `scripts/fotomaten.mjs` dat bestand aan met nieuwe foto's (het leest alleen de eerste bytes van elk nieuw bestand uit de fotorepo). De foto's zelf worden niet aangepast.
 
 ## Git
